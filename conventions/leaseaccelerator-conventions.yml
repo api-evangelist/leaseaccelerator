@@ -1,0 +1,195 @@
+generated: '2026-07-19'
+method: searched
+source: >-
+  https://docs-leaseaccelerator.insightsoftware.com/hc/en-us/articles/33895814655245-Application-Programming-Interface-API-for-Developers,
+  https://docs-leaseaccelerator.insightsoftware.com/hc/en-us/articles/33895853166093-API-Methods,
+  https://docs-leaseaccelerator.insightsoftware.com/hc/en-us/articles/33895858264717-Integration-Methods
+description: >-
+  Cross-cutting request/response semantics that apply to every LeaseAccelerator API operation rather than
+  to any single endpoint: the transport and envelope shape, the authentication style, how repeat writes
+  are made safe, how failures are batched or rolled back, how results are returned, versioning, and the
+  error envelope. LeaseAccelerator is a REST-addressed, XML-RPC-payload API: the operation is selected by
+  URL path, but all structure lives in an XML <APIRequest> / <APIResponse> envelope.
+base_url: https://www.leaseaccelerator.com/lease_accelerator/api/LeaseAccelerator
+url_template: https://{environment}/lease_accelerator/api/LeaseAccelerator/{operation}
+api_style: >-
+  REST-addressed operations over HTTPS with XML Remote Procedure Call payloads. All operations are POST.
+  Requests are multipart form submissions carrying a `token` field and a `file` field holding the XML
+  <APIRequest> document. Responses are XML <APIResponse> documents.
+statelessness: >-
+  Each request is stateless and multiple method requests can be submitted concurrently from the same
+  secure session.
+
+authentication:
+  scheme: SAML2 security token, submitted as the `token` form field on every request
+  key_types: [SAML2 session security token]
+  token_endpoint: https://www.leaseaccelerator.com/auth/api
+  detail: authentication/leaseaccelerator-authentication.yml
+  docs: https://docs-leaseaccelerator.insightsoftware.com/hc/en-us/articles/33895814655245-Application-Programming-Interface-API-for-Developers
+
+idempotency:
+  supported: true
+  model: natural-key upsert plus transactional rollback
+  mechanism: >-
+    LeaseAccelerator does not use a replay-cache idempotency key. Instead, write operations accept an
+    `importKey` (an external identifier from the calling system) paired with `ImportedFrom` (a name for the
+    external source, max 32 characters). On a write, LeaseAccelerator looks up the importKey; if it
+    resolves to a known record, that record is updated rather than a duplicate being created. This lets
+    external systems perform adds and updates using their own identifiers and makes a repeated submission
+    of the same record converge on the same state.
+  applies_to: >-
+    Add/Update and Import operations that accept importKey — AddUpdateAddress, AddUpdateCompany,
+    AddUpdatePerson, AddUpdateArtifact, AddUpdateCostCenters, and the Import* family.
+  request_correlation:
+    field: RequestId
+    description: >-
+      Every <APIRequest> carries a client-supplied RequestId, a unique identifier used to track the
+      request. It is echoed in the <APIResponse> whether the request succeeded or failed, and for the
+      asynchronous reporting operations it is the handle used to poll status and fetch the result.
+  transactional_rollback:
+    field: ErrorPolicy
+    value: Stop
+    description: >-
+      With ErrorPolicy of Stop, all processing halts immediately on error and any actions performed so far
+      for the request are rolled back — so a failed call leaves no partial state to reconcile before a
+      retry.
+  caveats:
+  - No Idempotency-Key request header and no documented replay window or replay indicator.
+  - >-
+    Idempotency is per-record and depends on the caller supplying a stable importKey; without one, a
+    repeated import creates new records.
+  docs: https://docs-leaseaccelerator.insightsoftware.com/hc/en-us/articles/33895853166093-API-Methods
+
+partial_failure:
+  description: >-
+    LeaseAccelerator makes batch-failure behavior an explicit, per-request contract rather than a fixed
+    server policy. Two envelope fields control it, and both warnings and errors are always fully detailed
+    in the APIResponse regardless of the policy chosen.
+  warning_policy:
+    field: WarningPolicy
+    values:
+      Stop: All processing stops immediately and any actions performed so far are rolled back.
+      Ignore: >-
+        Processing continues, ignoring all warnings. Warnings are still reported in the APIResponse.
+      Skip: >-
+        For multi-record requests, the record that triggered the warning is skipped and all other records
+        are processed normally. Not supported for single-record requests.
+    default: Ignore
+  error_policy:
+    field: ErrorPolicy
+    values:
+      Stop: All processing stops immediately and any actions performed so far are rolled back.
+      Skip: >-
+        For multi-record requests, the record that triggered the error is skipped and all other records
+        are processed normally. Not supported for single-record requests.
+    default: Stop
+
+pagination:
+  style: none
+  description: >-
+    The API does not document cursor or offset pagination. The Find* search operations (FindDeals,
+    FindAssets, FindContacts) constrain result size through a <Criteria> element rather than through page
+    parameters. Large data extraction is handled by the reporting operations instead: GenerateAsynch
+    produces a file that is polled with GetReportStatus and retrieved with GetReportFile.
+
+async:
+  supported: true
+  description: >-
+    Report and document generation is available both synchronously (Generate) and asynchronously
+    (GenerateAsynch). The asynchronous flow returns a request id, which is then polled with
+    GetReportStatus and used to fetch the completed artifact with GetReportFile.
+  operations:
+    submit: GenerateAsynch
+    poll: GetReportStatus
+    fetch: GetReportFile
+  readiness_checks:
+    description: >-
+      Several operations exist specifically so a caller can decide whether it is safe to read or write —
+      the API's substitute for a job-state webhook.
+    operations:
+      GetLatestClose: Fetch the most recent month-end close date.
+      GetBookingStatus: Fetch the status of booking tasks.
+      GetSweepingStatus: Fetch the status of sweeping tasks.
+      GetReportableStatus: >-
+        Fetch the status of sweeping and booking tasks together, typically to determine whether it is safe
+        to run a report.
+
+field_expansion:
+  supported: false
+  note: >-
+    No sparse-fieldset or expansion parameter. Operations return a fixed operation-specific payload shape.
+
+metadata:
+  supported: true
+  mechanism: AncillaryFields
+  description: >-
+    Records accept an <AncillaryFields> block of <AncillaryField> entries, each an Attribute name
+    (alphanumeric, up to 32 characters) and a Value (alphanumeric, up to 32 characters). Custom attribute
+    types can be configured as needed, and values commonly carry the code from the customer's chart of
+    accounts or accounting system.
+
+external_keys:
+  description: >-
+    The API's integration idiom for keeping two systems in sync without sharing primary keys.
+  fields:
+    importKey: An external identifier by which the record may be recognized.
+    ImportedFrom: A name for the external source associated with the importKey, limited to 32 characters.
+  behavior: >-
+    When the LeaseAccelerator surrogate id (for example addressId or companyId) is omitted but importKey
+    is supplied, LeaseAccelerator resolves the importKey and updates the corresponding record if it is
+    known; otherwise it creates a new one.
+
+retroactivity:
+  field: UpdateDealStatus
+  description: >-
+    Reference-data writes declare how far back a change should be applied, using None, All, or a
+    comma-separated list of deal states (PreOrigination, Active, Renewed, Evergreen, Terminated,
+    Disposed). None limits the change to future deals; All applies it retroactively to every deal in which
+    the record participates.
+
+versioning:
+  scheme: calendar-style platform release (YY.N, with YY.N.N patch releases)
+  current: '26.3'
+  mechanism: >-
+    The API is not independently versioned and there is no version header or path segment. Operations
+    track the LeaseAccelerator platform release; changes are communicated through dated release notes.
+  detail: lifecycle/leaseaccelerator-lifecycle.yml
+  changelog: changelog/leaseaccelerator-changelog.yml
+
+errors:
+  envelope: >-
+    Errors are returned inside a 200-level <APIResponse>, not as HTTP status codes. The <Response> block
+    carries RequestId, an integer Status (zero always means success; any other value is an error), and a
+    text Context describing the result ("Ok" always means success; any other value describes the error).
+  format: proprietary-xml
+  rfc9457: false
+  detail: errors/leaseaccelerator-problem-types.yml
+
+rate_limits:
+  documented: false
+  note: >-
+    No published rate limits, quota headers, or throttling policy. The documentation states only that
+    multiple method requests can be submitted concurrently from the same secure session.
+
+file_exchange:
+  description: >-
+    Alongside the API, LeaseAccelerator supports file-based integration, which the documentation presents
+    as a peer transport rather than a fallback.
+  outbound_formats: [XML, TSV, CSV, pipe-delimited, fixed-width, XLSX]
+  inbound_formats: [CSV, XML, XLSX]
+  transport: >-
+    Scheduled or manual SFTP transfer to a client-provided folder, and/or email, at a user-defined
+    frequency. Exported files can be PGP-encrypted.
+  inbound_mechanism: >-
+    A LeaseAccelerator file watcher is configured to monitor a folder on the client SFTP server; files
+    placed there with an agreed name, format, and layout are validated and imported, with success or
+    failure notified by email.
+  docs: https://docs-leaseaccelerator.insightsoftware.com/hc/en-us/articles/33895858264717-Integration-Methods
+
+cross_references:
+  authentication: authentication/leaseaccelerator-authentication.yml
+  errors: errors/leaseaccelerator-problem-types.yml
+  lifecycle: lifecycle/leaseaccelerator-lifecycle.yml
+  changelog: changelog/leaseaccelerator-changelog.yml
+  data_model: data-model/leaseaccelerator-data-model.yml
+  conformance: conformance/leaseaccelerator-conformance.yml

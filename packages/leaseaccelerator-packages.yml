@@ -1,0 +1,51 @@
+generated: '2026-07-19'
+method: searched
+source: >-
+  npm registry search, PyPI, GitHub repository and organization search, and the LeaseAccelerator developer
+  documentation (https://docs-leaseaccelerator.insightsoftware.com/hc/en-us/articles/33895814655245-Application-Programming-Interface-API-for-Developers)
+description: >-
+  Search for first-party LeaseAccelerator client libraries across the public package registries and code
+  hosts. None exist. LeaseAccelerator publishes no SDKs in any language and operates no public GitHub
+  organization; integration is expected to be built directly against the XML API, or delegated to
+  insightsoftware's Professional Services team, which leads the integration project.
+packages: []
+official_sdk_count: 0
+searched:
+- registry: npm
+  query: leaseaccelerator
+  result: 0 packages
+- registry: pypi
+  query: leaseaccelerator
+  result: 404 — no project
+- registry: github
+  query: leaseaccelerator (repository search)
+  result: >-
+    1 unrelated third-party repository (jennyjiang1989/leaseaccelerator); no LeaseAccelerator or
+    insightsoftware organization found.
+- registry: docs
+  query: LeaseAccelerator developer documentation SDK/client library references
+  result: >-
+    No SDK, client library, or package is offered. The only code the documentation ships is an inline Java
+    fragment plus a complete Java test client published as an appendix to the developer document.
+not_searched:
+- Maven Central
+- NuGet
+- pkg.go.dev
+- RubyGems
+- Packagist
+- crates.io
+not_searched_reason: >-
+  The provider publishes no SDK program at all and no source-code or SDK links exist in apis.yml to derive
+  candidates from, so no language-specific registry was expected to hold a first-party artifact.
+third_party_reference:
+- name: shib-http-client
+  language: java
+  url: https://github.com/DARIAH-DE/shib-http-client
+  official: false
+  role: >-
+    SAML2 ECP HTTP client recommended by the LeaseAccelerator developer documentation for obtaining the
+    security token. Maintained by DARIAH-DE, not by LeaseAccelerator or insightsoftware.
+notes:
+- >-
+  Because no official client library exists, this repo deliberately carries no `SDKs` pointer in apis.yml —
+  only `Packages`, recording the completed search and its negative result.

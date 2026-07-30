@@ -1,0 +1,28 @@
+{
+  "repo": "leaseaccelerator",
+  "feeds": [
+    {
+      "source": "https://help.insightsoftware.com/s/",
+      "feed_url": "https://help.insightsoftware.com/s/",
+      "title": "",
+      "saved": 0,
+      "method": "none"
+    },
+    {
+      "source": "https://insightsoftware.com/feed/",
+      "feed_url": "https://insightsoftware.com/feed/",
+      "title": "",
+      "saved": 0,
+      "method": "feed"
+    },
+    {
+      "source": "https://insightsoftware.com/resources/blogs/",
+      "feed_url": "https://insightsoftware.com/feed/",
+      "title": "",
+      "saved": 0,
+      "method": "discovered"
+    }
+  ],
+  "post_count": 10,
+  "fetched": "2026-07-25T15:00:33Z"
+}

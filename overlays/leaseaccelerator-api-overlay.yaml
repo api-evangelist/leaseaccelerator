@@ -1,0 +1,152 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enrichment overlay for the LeaseAccelerator API
+  version: 1.0.0
+  description: >-
+    Captures the API Evangelist enrichment layered on top of
+    openapi/leaseaccelerator-api-openapi.yml. The base description is itself generated from
+    LeaseAccelerator's published developer documentation, since LeaseAccelerator ships no machine-readable
+    spec; this overlay records the enrichment separately so the two remain distinguishable. It adds
+    provenance, links to the repo's cross-cutting artifacts, and per-tag agentic-access classification
+    marking which operation families are safe to read and which write to a financial sub-ledger.
+extends: openapi/leaseaccelerator-api-openapi.yml
+x-generated: '2026-07-19'
+x-method: generated
+x-source: >-
+  https://docs-leaseaccelerator.insightsoftware.com/hc/en-us/articles/33895814655245-Application-Programming-Interface-API-for-Developers,
+  https://docs-leaseaccelerator.insightsoftware.com/hc/en-us/articles/33895853166093-API-Methods
+actions:
+- target: $.info
+  description: Record enrichment provenance and the artifacts that describe cross-cutting behavior.
+  update:
+    x-apis-io-enrichment:
+      generated: '2026-07-19'
+      pipeline: api-evangelist enrichment pipeline
+      spec_origin: >-
+        Generated from published documentation. LeaseAccelerator does not publish an OpenAPI, AsyncAPI, or
+        WSDL description of this API.
+      artifacts:
+        authentication: authentication/leaseaccelerator-authentication.yml
+        conventions: conventions/leaseaccelerator-conventions.yml
+        errors: errors/leaseaccelerator-problem-types.yml
+        data_model: data-model/leaseaccelerator-data-model.yml
+        lifecycle: lifecycle/leaseaccelerator-lifecycle.yml
+        changelog: changelog/leaseaccelerator-changelog.yml
+        conformance: conformance/leaseaccelerator-conformance.yml
+        mcp: mcp/leaseaccelerator-mcp.yml
+        skills: skills/_index.yml
+- target: $
+  description: >-
+    Declare the API-wide runtime semantics that OpenAPI cannot express — the XML-RPC envelope, the
+    in-envelope error signal, the batch failure policies, and the natural-key idempotency model.
+  update:
+    x-runtime-semantics:
+      envelope:
+        request: APIRequest
+        response: APIResponse
+        note: >-
+          All structure lives in the XML envelope. The HTTP status code is a transport signal only;
+          application success or failure is Response/Status (0 means success) and Response/Context ("Ok"
+          means success).
+      idempotency:
+        model: natural-key upsert
+        fields: [importKey, ImportedFrom]
+        rollback: ErrorPolicy=Stop rolls back all actions performed so far for the request.
+        header: none
+      batch_policy:
+        WarningPolicy: [Stop, Skip, Ignore]
+        WarningPolicy_default: Ignore
+        ErrorPolicy: [Stop, Skip]
+        ErrorPolicy_default: Stop
+        note: Skip is unsupported for operations that accept only one record in the Payload.
+      pagination: none
+      rate_limits: undocumented
+      webhooks: none
+- target: $.components.securitySchemes.saml2Token
+  description: >-
+    Flag that the apiKey representation is a modelling compromise — the credential travels in the
+    multipart body, not the query string — and point at the full authentication profile.
+  update:
+    x-actual-location: multipart/form-data field
+    x-standard: SAML 2.0 ECP profile
+    x-token-endpoint: https://www.leaseaccelerator.com/auth/api
+    x-detail: authentication/leaseaccelerator-authentication.yml
+- target: $.tags[?(@.name=='Search')]
+  description: Classify the search family as read-only and safe for agent invocation.
+  update:
+    x-agentic-access:
+      action_class: read
+      consequence: none
+      confirmation: not_required
+- target: $.tags[?(@.name=='Process Status')]
+  description: Classify the process-status family as read-only and safe for agent invocation.
+  update:
+    x-agentic-access:
+      action_class: read
+      consequence: none
+      confirmation: not_required
+- target: $.tags[?(@.name=='Reporting')]
+  description: >-
+    Classify reporting as read-only. Generation produces a file and does not mutate lease or accounting
+    data, but callers should check GetReportableStatus first so sweeping and booking are settled.
+  update:
+    x-agentic-access:
+      action_class: read
+      consequence: none
+      confirmation: not_required
+      precondition: GetReportableStatus
+- target: $.tags[?(@.name=='Portfolio')]
+  description: >-
+    Classify portfolio writes as high consequence — these import and modify lease schedules and assets that
+    drive journal entries into the customer's general ledger.
+  update:
+    x-agentic-access:
+      action_class: write
+      consequence: high
+      confirmation: required
+      reversibility: >-
+        Only via ErrorPolicy=Stop rollback during the request, or a full schedule rollback afterwards.
+- target: $.tags[?(@.name=='Financials')]
+  description: Classify financial imports as high consequence — they feed the lease sub-ledger.
+  update:
+    x-agentic-access:
+      action_class: write
+      consequence: high
+      confirmation: required
+- target: $.tags[?(@.name=='Events')]
+  description: >-
+    Classify event recording as high consequence and largely irreversible — only end-of-term and payment
+    adjustment events can be rolled back via RollbackEvent.
+  update:
+    x-agentic-access:
+      action_class: write
+      consequence: high
+      confirmation: required
+      reversibility: partial
+- target: $.tags[?(@.name=='Reference Data')]
+  description: >-
+    Classify reference-data writes as medium consequence — changes can be applied retroactively across
+    existing deals via UpdateDealStatus.
+  update:
+    x-agentic-access:
+      action_class: write
+      consequence: medium
+      confirmation: required
+      note: UpdateDealStatus=All applies the change retroactively to every deal the record participates in.
+- target: $.tags[?(@.name=='Documents')]
+  description: Classify document writes as medium consequence.
+  update:
+    x-agentic-access:
+      action_class: write
+      consequence: medium
+      confirmation: required
+- target: $.tags[?(@.name=='User Provisioning')]
+  description: >-
+    Classify SSO user provisioning as high consequence — these operations grant and revoke access to the
+    platform and must never be autonomous.
+  update:
+    x-agentic-access:
+      action_class: write
+      consequence: high
+      confirmation: required
+      escalation: human_operator

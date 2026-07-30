@@ -1,0 +1,111 @@
+generated: '2026-07-19'
+method: derived
+status: candidate
+source: openapi/leaseaccelerator-api-openapi.yml
+description: >-
+  A candidate Model Context Protocol tool surface derived from the 43 documented LeaseAccelerator API
+  operations. LeaseAccelerator publishes no MCP server — this is a proposal, not a shipped product. It is
+  scoped deliberately: the read and status operations are safe to expose to an agent, while the import and
+  event operations write to a financial sub-ledger that feeds customers' general ledgers and are marked
+  as requiring human confirmation.
+search:
+  performed: '2026-07-19'
+  result: none
+  checked:
+  - LeaseAccelerator / insightsoftware developer documentation
+  - npm registry (no @leaseaccelerator or @insightsoftware MCP package)
+  - GitHub organization and repository search
+  note: >-
+    insightsoftware does ship an in-product AI assistant (Lineos) with natural language search over deals,
+    people, and companies as of the 26.2.1 release, but it is a UI feature inside LeaseAccelerator, not an
+    MCP server or any externally addressable agent interface.
+server:
+  name: leaseaccelerator
+  transport: stdio
+  published: false
+  upstream_base_url: https://www.leaseaccelerator.com/lease_accelerator/api/LeaseAccelerator
+authentication:
+  model: >-
+    Any implementation must first complete the SAML2 ECP exchange against the customer's identity provider
+    to obtain a security token, then pass that token as the `token` form field on every upstream call. The
+    token represents a specific federated LeaseAccelerator user, so the agent inherits exactly that user's
+    Access Control role and ScopeOfAccess — there is no way to narrow it further at the protocol level.
+  detail: authentication/leaseaccelerator-authentication.yml
+tools:
+- name: find_deals
+  description: Search lease deals by criteria.
+  consequence: read
+  source_operation: openapi/leaseaccelerator-api-openapi.yml#FindDeals
+- name: find_assets
+  description: Search leased assets by criteria.
+  consequence: read
+  source_operation: openapi/leaseaccelerator-api-openapi.yml#FindAssets
+- name: find_contacts
+  description: Find contact information by criteria.
+  consequence: read
+  source_operation: openapi/leaseaccelerator-api-openapi.yml#FindContacts
+- name: get_events_for_deal
+  description: List the events recorded against a deal.
+  consequence: read
+  source_operation: openapi/leaseaccelerator-api-openapi.yml#GetEventsforDeal
+- name: get_documents_for_deal
+  description: List the documents attached to a deal.
+  consequence: read
+  source_operation: openapi/leaseaccelerator-api-openapi.yml#GetDocumentsforDeal
+- name: get_participants_for_deal_artifacts
+  description: List the participants associated with a deal's artifacts.
+  consequence: read
+  source_operation: openapi/leaseaccelerator-api-openapi.yml#GetParticipantsForDealArtifacts
+- name: get_latest_close
+  description: Fetch the most recent month-end close date.
+  consequence: read
+  source_operation: openapi/leaseaccelerator-api-openapi.yml#GetLatestClose
+- name: get_booking_status
+  description: Fetch the status of booking tasks.
+  consequence: read
+  source_operation: openapi/leaseaccelerator-api-openapi.yml#GetBookingStatus
+- name: get_sweeping_status
+  description: Fetch the status of sweeping tasks.
+  consequence: read
+  source_operation: openapi/leaseaccelerator-api-openapi.yml#GetSweepingStatus
+- name: get_reportable_status
+  description: >-
+    Fetch the combined status of sweeping and booking tasks, to determine whether it is safe to run a
+    report.
+  consequence: read
+  source_operation: openapi/leaseaccelerator-api-openapi.yml#GetReportableStatus
+- name: generate_report_async
+  description: Submit an asynchronous report or document generation request and receive a request id.
+  consequence: read
+  note: Generates a file; does not mutate lease or accounting data.
+  source_operation: openapi/leaseaccelerator-api-openapi.yml#GenerateAsynch
+- name: get_report_status
+  description: Poll the status of an asynchronous report generation request.
+  consequence: read
+  source_operation: openapi/leaseaccelerator-api-openapi.yml#GetReportStatus
+- name: get_report_file
+  description: Retrieve the file produced by an asynchronous report generation request.
+  consequence: read
+  source_operation: openapi/leaseaccelerator-api-openapi.yml#GetReportFile
+write_operations_excluded:
+  rationale: >-
+    The remaining 30 operations write to the lease sub-ledger, provision or revoke SSO credentials, or
+    record irreversible end-of-term events. In a system whose output is journal entries posted to a
+    customer's general ledger, these should not be autonomous agent tools. If exposed at all they belong
+    behind explicit human confirmation with the request payload shown in full, and always with
+    ErrorPolicy=Stop so a rejected batch rolls back cleanly.
+  categories:
+    portfolio_writes: [ImportDeals, ImportantClassifyDeals, ModifyDealImport, ImportAssets, UpdateAssets, BulkParticipantUpdate]
+    financial_writes: [ImportDisbursements, ImportExchangeRates, ImportInvoicedExpenses, ImportLesseeRates, ImportPaidExpenses, ImportPaymentAdjustments]
+    event_writes: [RecordEvent, RecordAssetEvent, RollbackEvent, CaptureDocumentId]
+    reference_data_writes: [AddUpdateAddress, AddUpdateCompany, AddUpdateCostCenters, AddUpdatePerson, DefineReferenceData, ImportAddresses, ImportCompanies, ImportPeople]
+    document_writes: [AddUpdateArtifact, AttachFile]
+    identity_writes: [FederateUser, UpdateUser, RevokeUser]
+    synchronous_generate: [Generate]
+notes:
+- >-
+  Every tool would need an XML marshalling layer: the upstream API takes a multipart POST whose `file`
+  field is an <APIRequest> document and returns an <APIResponse> document, with the real success/failure
+  signal in Response/Status rather than the HTTP status code.
+- >-
+  There is no rate-limit documentation, so an implementation should apply its own client-side throttle.

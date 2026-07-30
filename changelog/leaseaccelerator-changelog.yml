@@ -1,0 +1,115 @@
+generated: '2026-07-19'
+method: searched
+source: https://docs-leaseaccelerator.insightsoftware.com/hc/en-us/
+description: >-
+  Structured capture of LeaseAccelerator's dated release notes. LeaseAccelerator ships calendar-numbered
+  platform releases (YY.N, with YY.N.N interim releases); each is documented as a Release Notes article in
+  the help center with a downloadable PDF. There is no separate API changelog — API operation changes and
+  report retirements appear in the same platform release notes. This artifact records the recent window;
+  the live help center is the source of truth.
+docs: https://docs-leaseaccelerator.insightsoftware.com/hc/en-us/
+versioning:
+  scheme: calendar-style platform release
+  current: '26.3'
+  format: 'YY.N feature release, YY.N.N interim release'
+  detail: lifecycle/leaseaccelerator-lifecycle.yml
+entries:
+- version: '26.3'
+  date: '2026-07'
+  latest: true
+  url: https://docs-leaseaccelerator.insightsoftware.com/hc/en-us/articles/47450362598413-26-3-Release-Notes
+  breaking:
+  - User Activity Log report retired — use User Activity Log v2.
+  - Transaction Report retired — use Transaction Report v2.
+  - >-
+    Transaction Report v2 status columns renamed and reduced: the Status column between DealID and Lessee
+    removed, Short Status renamed Deal Status Short, and the Status column between Current Payment and
+    Vendors renamed Deal Status Long.
+  additions:
+  - New RFP Administrator access role in Access Control, with email notifications at RFP milestones.
+  - Attached Documents report under Reporting - Administrative, restricted to Power Users and LAStaff.
+  - Landing Dashboard moved to the v2 platform with seven analytical panels and drill-through reporting.
+  - REM-LAM Reconciliation Report gains As At Date and Show Terminated Deals parameters plus four source-tagged financial columns.
+  highlights:
+  - Advanced Search redesigned across Deals and People/Contacts, with the separate Search button removed.
+  - >-
+    EOT Event pending-approval guardrail — nightly maintenance now checks for a pending EOT approval before
+    recording a new end-of-term event, preventing duplicates.
+  - Asset event recording now works without timeout on deals with 1,500 or more assets.
+  - Further Ledger Export performance improvements.
+  fixes:
+  - Lease Abstract report no longer emits an extra $0 payment-schedule row for non-first-of-month payment dates.
+  - Finance leases no longer generate an erroneous posting code 502 depreciation entry before the Available For Use Date.
+  - Renewal payment schedules keep the original day-of-month through February renewals in non-leap years.
+  - Maturity Analysis Report now includes future-dated non-remeasuring payment adjustments.
+  - RFP release emails to chosen lessors no longer include LeaseAccelerator staff accounts.
+- version: '26.2.1'
+  date: '2026-06'
+  url: https://docs-leaseaccelerator.insightsoftware.com/hc/en-us/articles/46662953767949-26-2-1-Release-Notes
+  additions:
+  - >-
+    Natural language search powered by Lineos AI — plain-language queries for deals, people, and companies
+    in the Report Assist tab, with conversational context and pinnable results. Requires Lineos AI to be
+    enabled for the organization.
+  - User Admin v2 report (BYOR User Admin converted to the v2 platform, non-editable, wider export options).
+  - Four lease date columns added to the REM-LAM Status Reconciliation Report; report now filters to REM-originated contracts only.
+  - IBR added to the Operational Payment Business View in Design Studio.
+  highlights:
+  - Lease Lifecycle parameter Origination option (Incomplete and Pending Approval statuses) completed for Segregation of Duties.
+  - >-
+    Security remediations from penetration testing and automated vulnerability scanning — XSS protections,
+    dependency upgrades, and script integrity controls on login pages.
+  - Backend performance work on the database and reporting layers, including report status processing and stored procedure execution.
+  fixes:
+  - Include Adjusting Entries parameter on Ledger Export now correct for non-Gregorian fiscal years.
+  - Deal Analysis Report Overview tab now sources IBR from the original takedown value, consistent with the rest of the report.
+  - >-
+    Full rollback of a booked deal schedule generates its adjusting entries again, fixing a regression
+    introduced in 26.2; affected schedules are post-processed automatically.
+- version: '26.2'
+  date: '2026-04'
+  deployed: '2026-03-15'
+  url: https://docs-leaseaccelerator.insightsoftware.com/hc/en-us/articles/45316052482317-26-2-Release-Notes
+- version: '26.1.1'
+  date: '2026-03'
+  url: https://docs-leaseaccelerator.insightsoftware.com/hc/en-us/articles/44461733751181-26-1-1-Release-Notes
+- version: '26.1'
+  date: '2026-01'
+  url: https://docs-leaseaccelerator.insightsoftware.com/hc/en-us/articles/43086952977293-26-1-Release-Notes
+- version: '25.4'
+  date: '2025-10'
+  url: https://docs-leaseaccelerator.insightsoftware.com/hc/en-us/articles/40383864775053-25-4-Release-Notes
+- version: '25.3.1'
+  date: '2025-09'
+  url: https://docs-leaseaccelerator.insightsoftware.com/hc/en-us/articles/39525535564301--25-3-1-Release-Notes
+- version: '25.3'
+  date: '2025-07'
+  url: https://docs-leaseaccelerator.insightsoftware.com/hc/en-us/articles/37992210632717--25-3-Release-Notes
+- version: '25.2.1'
+  date: '2025-06'
+  url: https://docs-leaseaccelerator.insightsoftware.com/hc/en-us/articles/37324308485517-25-2-1-Release-Notes
+- version: '25.2'
+  date: '2025-05'
+  url: https://docs-leaseaccelerator.insightsoftware.com/hc/en-us/articles/35756958022925-25-2-Release-Notes
+- version: '25.1.1'
+  date: '2025-03'
+  url: https://docs-leaseaccelerator.insightsoftware.com/hc/en-us/articles/34932950648333-25-1-1-Release-Notes
+- version: '25.1'
+  url: https://docs-leaseaccelerator.insightsoftware.com/hc/en-us/articles/33973819862925-25-1-Release-Notes
+- version: 24R3
+  url: https://docs-leaseaccelerator.insightsoftware.com/hc/en-us/articles/33973828077069-24R3-Release-Notes
+- version: 24R2.2
+  url: https://docs-leaseaccelerator.insightsoftware.com/hc/en-us/articles/33973871852941-24R2-2-Release-Notes
+- version: 24R2.1
+  url: https://docs-leaseaccelerator.insightsoftware.com/hc/en-us/articles/33973827793165-24R2-1-Release-Notes
+- version: 24R2
+  url: https://docs-leaseaccelerator.insightsoftware.com/hc/en-us/articles/33973831738893-24R2-Release-Notes
+- version: 24R1
+  url: https://docs-leaseaccelerator.insightsoftware.com/hc/en-us/articles/33973843522701-24R1-Release-Notes
+notes:
+- >-
+  Release notes are product-wide, not API-scoped. No entry in the observed window announces an added,
+  changed, or removed API operation; API surface changes would appear here if they occurred.
+- >-
+  Dates are the month stated at the head of each release notes article. The 25.1 and 24Rx articles do not
+  state a month in the article body.

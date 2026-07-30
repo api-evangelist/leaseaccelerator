@@ -1,0 +1,30 @@
+{
+  "provider": "leaseaccelerator",
+  "sources": [
+    "leaseaccelerator-documents-api-openapi.yml",
+    "leaseaccelerator-events-api-openapi.yml",
+    "leaseaccelerator-financials-api-openapi.yml",
+    "leaseaccelerator-portfolio-api-openapi.yml",
+    "leaseaccelerator-process-status-api-openapi.yml",
+    "leaseaccelerator-reference-data-api-openapi.yml",
+    "leaseaccelerator-reporting-api-openapi.yml",
+    "leaseaccelerator-search-api-openapi.yml",
+    "leaseaccelerator-user-provisioning-api-openapi.yml"
+  ],
+  "outputs": [
+    "leaseaccelerator-documents-api-openapi.yml",
+    "leaseaccelerator-events-api-openapi.yml",
+    "leaseaccelerator-financials-api-openapi.yml",
+    "leaseaccelerator-portfolio-api-openapi.yml",
+    "leaseaccelerator-process-status-api-openapi.yml",
+    "leaseaccelerator-reference-data-api-openapi.yml",
+    "leaseaccelerator-reporting-api-openapi.yml",
+    "leaseaccelerator-search-api-openapi.yml",
+    "leaseaccelerator-user-provisioning-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}

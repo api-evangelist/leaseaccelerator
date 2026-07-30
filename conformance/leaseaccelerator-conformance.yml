@@ -1,0 +1,134 @@
+generated: '2026-07-19'
+method: searched
+source: >-
+  Derived from openapi/leaseaccelerator-api-openapi.yml and the artifacts in this repo, corroborated
+  against the LeaseAccelerator developer documentation
+  (https://docs-leaseaccelerator.insightsoftware.com/hc/en-us/articles/33895814655245-Application-Programming-Interface-API-for-Developers),
+  the Integration Methods guide, https://trust.insightsoftware.com/, and https://insightsoftware.com/trust/
+description: >-
+  Which industry and cross-cutting standards the LeaseAccelerator API conforms to. LeaseAccelerator is an
+  enterprise financial-reporting platform, so its strongest conformance claims are accounting standards and
+  audited security frameworks rather than web-API standards. On the API-standards axis it is a
+  pre-REST-era design: SAML2 SOAP/ECP authentication and XML-RPC payloads over HTTP POST.
+standards:
+- id: saml2
+  conforms: true
+  evidence: >-
+    Access is secured by SAML2 per the OASIS SAML specifications; authentication uses the SAML 2.0 Enhanced
+    Client or Proxy (ECP) profile against the customer's identity provider, exchanging SAML2 Metadata
+    (certificate and configuration information) during onboarding.
+- id: oauth2
+  conforms: false
+  evidence: >-
+    No OAuth 2.0 surface. No authorization endpoint, token endpoint, client registration, or scopes; the
+    credential is a SAML2-issued session token submitted as a form field.
+- id: oidc
+  conforms: false
+  evidence: >-
+    No /.well-known/openid-configuration on any host (well-known/leaseaccelerator-well-known.yml); identity
+    is federated via SAML2, not OIDC.
+- id: scim
+  conforms: false
+  evidence: >-
+    User provisioning is real but proprietary — FederateUser, UpdateUser, and RevokeUser operations rather
+    than a SCIM 2.0 /Users endpoint.
+- id: rest
+  conforms: partial
+  evidence: >-
+    REST-addressed only. The operation is selected by URL path segment, but every operation is POST, there
+    are no resource URIs, no HTTP verb semantics, and no HTTP status-code error signaling. The provider
+    itself describes the design as combining "the simplicity of REST requests with the robust data exchange
+    capabilities of XML Remote Procedure Calls (RPC)".
+- id: rfc9457
+  conforms: false
+  evidence: >-
+    No application/problem+json. Errors are returned inside a 200 <APIResponse> envelope carrying an
+    integer Status and a text Context (errors/leaseaccelerator-problem-types.yml).
+- id: json-api
+  conforms: false
+  evidence: The API is XML end to end; no JSON representation is offered.
+- id: odata
+  conforms: false
+  evidence: No OData metadata document, entity sets, or $filter/$select query surface.
+- id: idempotency
+  conforms: partial
+  evidence: >-
+    No Idempotency-Key header or replay cache. Idempotent write semantics are provided instead by
+    natural-key upsert (importKey + ImportedFrom) plus transactional rollback under ErrorPolicy=Stop
+    (conventions/leaseaccelerator-conventions.yml).
+- id: pagination
+  conforms: false
+  evidence: >-
+    No cursor or offset pagination. Search operations constrain results with a <Criteria> element; bulk
+    extraction is handled by the asynchronous reporting operations instead.
+- id: rfc8594
+  conforms: false
+  evidence: >-
+    No Sunset or Deprecation response headers. Retirements are announced only in dated release notes
+    (lifecycle/leaseaccelerator-lifecycle.yml).
+- id: webhooks
+  conforms: false
+  evidence: >-
+    No webhook or event-subscription surface. Asynchronous outcomes are polled (GetReportStatus,
+    GetBookingStatus, GetSweepingStatus, GetReportableStatus) or notified by email for file-based imports.
+- id: tls
+  conforms: true
+  evidence: >-
+    HTTPS enforced on all hosts with HSTS; TLSv1.2 on the API host and TLSv1.3 on the documentation and
+    corporate hosts (security/leaseaccelerator-domain-security.yml). insightsoftware states TLS in transit
+    and AES-256 at rest.
+- id: rfc9116
+  conforms: false
+  evidence: No /.well-known/security.txt on any host.
+- id: soc2
+  conforms: true
+  evidence: >-
+    LeaseAccelerator carries its own SOC 2 Type 2 audit report (Lease Accounting Manager, 2026), with
+    monthly bridge letters, published in the insightsoftware trust center.
+- id: soc1
+  conforms: true
+  evidence: >-
+    LeaseAccelerator carries its own SOC 1 Type 2 audit report (2026) — relevant because the platform
+    generates journal entries that flow into customers' financial statements.
+- id: iso-27001
+  conforms: true
+  evidence: insightsoftware declares ISO 27001 certification on its trust center and public trust page.
+- id: iso-9001
+  conforms: true
+  evidence: insightsoftware publishes an ISO 9001:2015 re-certification document (2025) on its trust center.
+- id: gdpr
+  conforms: true
+  evidence: >-
+    Declared on the insightsoftware trust center and covered by the insightsoftware Data Processing
+    Addendum.
+- id: ccpa
+  conforms: true
+  evidence: Declared on the insightsoftware trust center.
+- id: pci-dss
+  conforms: false
+  evidence: Not claimed. LeaseAccelerator does not process cardholder data.
+- id: hipaa
+  conforms: false
+  evidence: Not claimed for LeaseAccelerator.
+- id: fedramp
+  conforms: false
+  evidence: >-
+    Not claimed by insightsoftware. The string appears on the trust center only as part of the hosting
+    platform's generic certification label vocabulary.
+domain_standards:
+  note: >-
+    The accounting standards LeaseAccelerator is built to comply with. These are the provider's primary
+    conformance claims and the reason the platform exists.
+  standards:
+  - id: asc-842
+    name: FASB ASC 842 — Leases (US GAAP)
+    conforms: true
+  - id: ifrs-16
+    name: IFRS 16 — Leases
+    conforms: true
+  - id: gasb-87
+    name: GASB 87 — Leases (US state and local government)
+    conforms: true
+  evidence: >-
+    "LeaseAccelerator lease management software is engineered to simplify compliance with complex standards
+    like ASC 842, IFRS 16, and GASB 87 by automating lease accounting processes."

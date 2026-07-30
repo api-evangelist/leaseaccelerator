@@ -1,0 +1,84 @@
+generated: '2026-07-19'
+method: searched
+probe: true
+source: https://trust.insightsoftware.com/, https://insightsoftware.com/trust/
+url: https://trust.insightsoftware.com/
+description: >-
+  insightsoftware operates a Conveyor-hosted trust center covering its full product portfolio, including
+  LeaseAccelerator. Certifications below are the programs insightsoftware itself declares on the trust
+  center (the `certifications` list in the trust center's own payload), corroborated by the public
+  insightsoftware.com/trust/ summary page. LeaseAccelerator-specific audit reports and bridge letters are
+  published in the trust center data room; access is gated behind an NDA/request flow.
+scope: >-
+  Company-wide (insightsoftware), with per-product audit reports. LeaseAccelerator has its own SOC 1 Type 2
+  and SOC 2 Type 2 reports rather than being covered only by a corporate report.
+vendor: Conveyor
+certifications:
+- name: SOC 2 Type 2
+  scope: product
+  note: >-
+    Annual SOC 2 Type 2 audits evaluating design and operating effectiveness of internal controls, based on
+    AICPA Trust Services Principles and Criteria for Security, Availability, and Confidentiality.
+- name: SOC 1 Type 2
+  scope: product
+- name: ISO 27001
+  scope: company
+  note: Information security management system (ISMS) certification.
+- name: ISO 9001
+  scope: company
+  note: Quality management system; a 2025 re-certification document is published (ISO 9001:2015).
+regulatory:
+- GDPR
+- CCPA
+leaseaccelerator_documents:
+  note: >-
+    Document titles observed in the trust center data room listing that name LeaseAccelerator or its Lease
+    Accounting Manager (LAM) product. Documents themselves require a request; only their existence and
+    titles are public.
+  documents:
+  - LeaseAccelerator Lease Accounting Manager - SOC 2 Type 2 - Audit Report 2026
+  - LeaseAccelerator LAM - SOC 1 Type 2 - Audit Report 2026
+  - LeaseAccelerator - SOC 2 Type 2 Audit Report April 2025
+  - LeaseAccelerator - SOC 1 Type 2 Audit Report April 2025
+  - LeaseAccelerator SOC 1 Type 2 Audit Report Sep 2025
+  - LeaseAccelerator - Agreed Upon Procedures - Report 2025
+  - 2025 Lease Accounting Manager Customer Facing (penetration test report)
+  bridge_letters: >-
+    Monthly SOC 1 Type 2 and SOC 2 Type 2 bridge letters are published continuously; the most recent
+    observed are dated July 2026.
+roadmap:
+  note: Published on the trust center as planned compliance work.
+  items:
+  - ISO 27001 - 2026 certificate
+  - JustPerform - Account Reconciliation - SOC 1 Type 2
+security_program:
+  source: https://insightsoftware.com/trust/
+  approach: defense in depth
+  practices:
+  - Encryption — TLS in transit, AES-256 at rest.
+  - Vulnerability management with scheduled scans and dark web monitoring.
+  - Secure software development lifecycle with static code analysis and independent third-party penetration testing.
+  - Documented incident response plan covering reporting, roles and responsibilities, prioritization, escalation, and remediation.
+  - Employee security awareness training and phishing simulations.
+  - Automated encrypted backups with disaster recovery plans.
+  - >-
+    Security remediations from penetration testing and automated vulnerability scanning are shipped in
+    platform releases (see the 26.2.1 release notes).
+  breach_notification: >-
+    Upon becoming aware of a Security Incident, insightsoftware will notify the customer without undue
+    delay and will provide information relating to the incident as it becomes known or is reasonably
+    requested.
+evidence:
+- source: https://trust.insightsoftware.com/
+  finding: >-
+    Trust center payload declares certifications iso-9001, iso-27001, soc1-type-2, soc2-type-2, ccpa, gdpr;
+    data room lists LeaseAccelerator-specific SOC 1/SOC 2 Type 2 audit reports and monthly bridge letters.
+- source: https://insightsoftware.com/trust/
+  finding: >-
+    Public trust summary names ISO 27001, SSAE-18 SOC 2 Type 2, GDPR, and CCPA, and describes the security
+    program above.
+notes:
+- >-
+  ISO 27017, ISO 27018, FedRAMP, PCI DSS, HIPAA, TISAX, and CSA STAR strings appear in the trust center
+  page source but belong to the Conveyor platform's generic certification label vocabulary, not to
+  insightsoftware's declared certification set. They are deliberately excluded here.

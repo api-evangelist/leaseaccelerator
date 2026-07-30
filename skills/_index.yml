@@ -1,0 +1,60 @@
+generated: '2026-07-19'
+method: generated
+source: >-
+  openapi/leaseaccelerator-api-openapi.yml and
+  https://docs-leaseaccelerator.insightsoftware.com/hc/en-us/articles/33895853166093-API-Methods
+description: >-
+  Packaged Agent Skills for the marquee LeaseAccelerator flows. Every skill is grounded in real operation
+  keys taken from the published API Methods reference — no invented operations. Skills carry the
+  cross-cutting rules an agent must not get wrong on this API: the credential is a SAML2 token not an API
+  key, the failure signal is inside the XML envelope not the HTTP status, idempotency comes from ImportKey
+  rather than a header, and most events cannot be rolled back.
+search:
+  performed: '2026-07-19'
+  result: none
+  note: >-
+    LeaseAccelerator publishes no AGENTS.md, agent skills, or MCP server. These skills are generated from
+    the provider's public documentation.
+api: leaseaccelerator:leaseaccelerator-api
+skills:
+- name: leaseaccelerator-import-lease-portfolio
+  file: leaseaccelerator-import-lease-portfolio.md
+  summary: >-
+    Import lease schedules and assets safely — period check, choosing between ImportDeals and
+    ImportantClassifyDeals, external-key idempotency, and reading the validation results.
+  consequence: high
+  operations: [FederateUser, ImportDeals, ImportantClassifyDeals, ModifyDealImport, ImportAssets, UpdateAssets, GetLatestClose]
+- name: leaseaccelerator-generate-and-retrieve-reports
+  file: leaseaccelerator-generate-and-retrieve-reports.md
+  summary: >-
+    Bulk data extraction — check reportable status, submit GenerateAsynch, poll GetReportStatus, fetch with
+    GetReportFile, or use scheduled SFTP delivery instead.
+  consequence: read
+  operations: [GetReportableStatus, GetSweepingStatus, GetBookingStatus, GetLatestClose, GenerateAsynch, GetReportStatus, GetReportFile, Generate]
+- name: leaseaccelerator-sync-reference-data
+  file: leaseaccelerator-sync-reference-data.md
+  summary: >-
+    Keep companies, people, addresses, cost centers and FX rates in sync — AddUpdate versus Import, external
+    keys, and controlling retroactivity with UpdateDealStatus.
+  consequence: medium
+  operations: [AddUpdateCompany, AddUpdatePerson, AddUpdateAddress, AddUpdateCostCenters, ImportCompanies, ImportPeople, ImportAddresses, ImportExchangeRates, DefineReferenceData, FindContacts]
+- name: leaseaccelerator-record-lease-events
+  file: leaseaccelerator-record-lease-events.md
+  summary: >-
+    Record renewals, terminations, buyouts, returns, evergreen and impairments — and know that only EOT and
+    payment adjustment events can be rolled back.
+  consequence: high
+  operations: [FindDeals, FindAssets, GetEventsforDeal, RecordEvent, RecordAssetEvent, RollbackEvent, GetLatestClose]
+shared_rules:
+- Authenticate by SAML2 ECP against https://www.leaseaccelerator.com/auth/api; there are no API keys.
+- Every operation is a POST with `token` and `file` form fields; `file` is an <APIRequest> XML document.
+- Read Response/Status from the <APIResponse> envelope. HTTP 200 does not mean the operation succeeded.
+- Send ImportKey and ImportedFrom on every write so retries upsert rather than duplicate.
+- Prefer ErrorPolicy=Stop so a failed batch rolls back cleanly.
+- There is no pagination and no webhooks; asynchronous work is polled.
+cross_references:
+  authentication: authentication/leaseaccelerator-authentication.yml
+  conventions: conventions/leaseaccelerator-conventions.yml
+  errors: errors/leaseaccelerator-problem-types.yml
+  data_model: data-model/leaseaccelerator-data-model.yml
+  mcp: mcp/leaseaccelerator-mcp.yml

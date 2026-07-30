@@ -1,0 +1,58 @@
+generated: '2026-07-19'
+method: searched
+source: live probes of the /.well-known/ surface on every host in apis.yml and openapi servers[]
+description: >-
+  Result of probing the RFC-registered /.well-known/ discovery surface on the LeaseAccelerator and
+  insightsoftware hosts. No document was found on any host. This is a recorded negative result, not a gap
+  in the probe: LeaseAccelerator authenticates via SAML2 against the customer's own identity provider
+  rather than via OAuth or OIDC, so there is no authorization-server metadata to publish, and neither
+  insightsoftware nor LeaseAccelerator publishes a security.txt or api-catalog.
+documents: []
+hosts:
+- host: https://www.leaseaccelerator.com
+  role: API and application host
+  note: >-
+    All /.well-known/ paths return 302 redirects to the insightsoftware LeaseAccelerator product page
+    rather than a document.
+  documents:
+  - path: /.well-known/security.txt
+    status: 302
+  - path: /.well-known/openid-configuration
+    status: 302
+  - path: /.well-known/oauth-authorization-server
+    status: 302
+  - path: /.well-known/api-catalog
+    status: 302
+  - path: /.well-known/ai-plugin.json
+    status: 302
+- host: https://insightsoftware.com
+  role: parent company website
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+- host: https://docs-leaseaccelerator.insightsoftware.com
+  role: developer documentation host
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+security_txt:
+  present: false
+  note: >-
+    No RFC 9116 security.txt on any host, and no published vulnerability disclosure contact or policy. See
+    security/leaseaccelerator-trust-center.yml for the security program insightsoftware does publish.

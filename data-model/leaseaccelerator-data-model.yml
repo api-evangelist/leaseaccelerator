@@ -1,0 +1,320 @@
+generated: '2026-07-19'
+method: derived
+source: >-
+  openapi/leaseaccelerator-api-openapi.yml and the identifier fields and payload structures documented in
+  https://docs-leaseaccelerator.insightsoftware.com/hc/en-us/articles/33895853166093-API-Methods (including
+  its Ontology section)
+description: >-
+  The LeaseAccelerator entity graph as it appears through the API. Derived from the identifier fields
+  carried in operation payloads (DealId, CompanyId, AddressId, PartyId, AssetId, ArtifactId, EventId,
+  LedgerEntryId and their relatives) and from the documented relationships between them. LeaseAccelerator's
+  centre of gravity is the Deal — a lease schedule — with Assets hanging off it, Companies and People
+  attached as participants, Events driving state transitions, and Ledger Entries falling out the far end
+  into the customer's general ledger.
+identifiers:
+  style: integer surrogate keys, system-assigned
+  external_keys:
+    fields: [importKey, ImportedFrom, ExternalId]
+    behavior: >-
+      Records can be addressed by the calling system's own identifier instead of the LeaseAccelerator
+      surrogate key. When the surrogate id is omitted but importKey resolves, the existing record is
+      updated; otherwise a new one is created.
+    detail: conventions/leaseaccelerator-conventions.yml
+  no_prefixes: >-
+    Unlike prefixed-id APIs, LeaseAccelerator ids are bare integers with no type prefix — the type is
+    implied by the element name (<DealId>, <CompanyId>, <AssetId>).
+entities:
+- name: Deal
+  aka: [Schedule, Lease]
+  id_field: DealId
+  alt_id_field: ScheduleNumber
+  description: >-
+    A lease schedule — the central object. Carries the lease term, payment schedule, classification, and
+    the participants and assets attached to it.
+  states: [PreOrigination, Active, Renewed, Evergreen, Terminated, Disposed]
+  operations: [ImportDeals, ImportantClassifyDeals, ModifyDealImport, FindDeals, GetEventsforDeal, GetDocumentsforDeal, GetParticipantsForDealArtifacts]
+  relationships:
+  - kind: has_many
+    target: Asset
+    via: DealId
+  - kind: has_many
+    target: Event
+    via: DealId
+  - kind: has_many
+    target: Artifact
+    via: DealId
+  - kind: has_many
+    target: Participant
+    via: DealId
+  - kind: has_many
+    target: PaymentAdjustment
+    via: DealId
+  - kind: has_many
+    target: RelatedExpense
+    via: DealId
+  - kind: belongs_to
+    target: Ledger
+    via: GL Code (Coding Convention)
+- name: Asset
+  id_field: AssetId
+  description: >-
+    An individual leased item on a schedule — equipment or real estate. Carries serial number, product
+    category, unit price, cost center, ship-to location, and its own owner and user.
+  fields_observed: [SerialNumber, ProductCategory, CostCenter, ShipToId, AssetOwnerId, AssetUserId]
+  operations: [ImportAssets, UpdateAssets, FindAssets, RecordAssetEvent]
+  relationships:
+  - kind: belongs_to
+    target: Deal
+    via: DealId
+  - kind: belongs_to
+    target: Address
+    via: ShipToId
+  - kind: belongs_to
+    target: Person
+    via: AssetOwnerId
+  - kind: belongs_to
+    target: Person
+    via: AssetUserId
+  - kind: belongs_to
+    target: CostCenter
+    via: CostCenter
+  - kind: has_many
+    target: Event
+    via: AssetId
+  - kind: has_one
+    target: Asset
+    via: parent/child link (external ID)
+    note: >-
+      Assets support a parent/child relationship via linked external IDs. Quantity must be 1 for any single
+      parent or child asset.
+- name: Company
+  id_field: CompanyId
+  description: >-
+    An organization participating in the leasing program. The same company can appear under several role
+    types, each with its own ledger code and functional currency, but only one parent company.
+  role_types: [Lessee, Entity, Funder, Vendor, SBU]
+  operations: [AddUpdateCompany, ImportCompanies, FindContacts]
+  relationships:
+  - kind: belongs_to
+    target: Company
+    via: ParentCompanyId
+    note: A company can only be configured with one parent company.
+  - kind: has_many
+    target: Address
+    via: CompanyId
+  - kind: has_many
+    target: Person
+    via: CompanyId
+  - kind: has_many
+    target: Participant
+    via: CompanyId
+- name: Person
+  aka: [Party, Contact]
+  id_field: PartyId
+  description: >-
+    An individual participating in the leasing program in one or more roles. May or may not be an employee
+    of the customer.
+  fields_observed: [FullName, Email, Phone, Title, ContactType]
+  operations: [AddUpdatePerson, ImportPeople, FindContacts]
+  relationships:
+  - kind: belongs_to
+    target: Company
+    via: CompanyId
+  - kind: belongs_to
+    target: Address
+    via: AddressId
+  - kind: has_many
+    target: Participant
+    via: PartyId
+- name: Address
+  id_field: AddressId
+  description: >-
+    A specific workplace where employees work or equipment is located or shipped, including the physical
+    location of leased real estate. Typically associated with a Lessee, Entity, or Business Unit, with a
+    1:n relationship because multiple teams may sit at one location.
+  role_types: [ShipTo]
+  fields_observed: [Address1, Address2, City, Country, PostalCode, StateProvinceShort, StateProvinceLong, Latitude, Longitude, Roles]
+  operations: [AddUpdateAddress, ImportAddresses]
+  relationships:
+  - kind: belongs_to
+    target: Company
+    via: CompanyId
+  - kind: has_many
+    target: Asset
+    via: ShipToId
+  alt_key:
+    field: Facility Code (ShipToKey)
+    note: >-
+      Assets and deals reference a ship-to either by Facility Code or by full address fields — never both;
+      supplying both is a validation error.
+- name: Participant
+  description: >-
+    The association of a Company or Person to a Deal in a specific role. Not addressed by its own id;
+    identified by the deal plus the party plus the role type. Custom participant role types can be
+    configured.
+  operations: [BulkParticipantUpdate, GetParticipantsForDealArtifacts]
+  relationships:
+  - kind: belongs_to
+    target: Deal
+    via: DealId
+  - kind: belongs_to
+    target: Company
+    via: CompanyId
+  - kind: belongs_to
+    target: Person
+    via: PartyId
+- name: Event
+  id_field: EventId
+  description: >-
+    A recorded occurrence or intention against a deal or asset, driving lease state transitions —
+    terminations, renewals, buyouts, returns, evergreen, and impairments.
+  types_observed: [Terminate without Fee, Evergreen, Renewal, Return, Buyout, Impairment]
+  operations: [RecordEvent, RecordAssetEvent, RollbackEvent, GetEventsforDeal]
+  reversibility: >-
+    Only end-of-term (EOT) events and payment adjustment events can be rolled back via RollbackEvent.
+  relationships:
+  - kind: belongs_to
+    target: Deal
+    via: DealId
+  - kind: belongs_to
+    target: Asset
+    via: AssetId
+- name: Artifact
+  aka: [Document]
+  id_field: ArtifactId
+  alt_id_field: ArtifactNumber
+  description: >-
+    A document associated with a deal, optionally with line items. Adding a new document can create a new
+    deal.
+  fields_observed: [ArtifactType, ArtifactNumber, EffectiveDate]
+  operations: [AddUpdateArtifact, AttachFile, GetDocumentsforDeal, GetParticipantsForDealArtifacts]
+  relationships:
+  - kind: belongs_to
+    target: Deal
+    via: DealId
+  - kind: has_many
+    target: LineItem
+    via: ArtifactId
+- name: CostCenter
+  description: A cost center used to code assets. Required on every asset.
+  operations: [AddUpdateCostCenters]
+  relationships:
+  - kind: has_many
+    target: Asset
+    via: CostCenter
+- name: Ledger
+  description: >-
+    An accounting ledger the deal is booked into. A deal's GL Code (Coding Convention) must be configured
+    in every ledger the deal is booked into, with all five required account fields populated.
+  operations: [DefineReferenceData]
+  relationships:
+  - kind: has_many
+    target: LedgerEntry
+    via: LedgerEntryId
+- name: LedgerEntry
+  id_field: LedgerEntryId
+  sub_ids: [LedgerEntryLineId, LedgerEntrySubId, PostingId, PostingEntryId]
+  description: >-
+    A journal entry generated by LeaseAccelerator's lease sub-ledger, exported to the customer's ERP.
+    Posting codes identify the entry type (for example posting code 502 for depreciation).
+  operations: [CaptureDocumentId, GenerateAsynch]
+  relationships:
+  - kind: belongs_to
+    target: Deal
+    via: DealId
+  - kind: belongs_to
+    target: Ledger
+  - kind: has_one
+    target: ExternalDocument
+    via: ExternalDocumentId
+    note: >-
+      CaptureDocumentId is the return path — the ERP communicates the document id it assigned to an
+      accepted journal entry back to LeaseAccelerator, closing the loop.
+- name: Disbursement
+  description: An actual payment made against a lease, imported back from Accounts Payable.
+  operations: [ImportDisbursements]
+  fields_observed: [PaymentReferenceId]
+  relationships:
+  - kind: belongs_to
+    target: Deal
+    via: DealId
+- name: PaymentAdjustment
+  description: >-
+    A new payment schedule applied during a lease term. May be remeasuring or non-remeasuring, and may be
+    future-dated.
+  operations: [ImportPaymentAdjustments]
+  relationships:
+  - kind: belongs_to
+    target: Deal
+    via: DealId
+- name: RelatedExpense
+  aka: [Other Related Expense]
+  description: >-
+    An expense associated with a lease, typed and subtyped, with a payment frequency, payee, and first
+    scheduled payment date. Types observed include ARO and Lease Incentive.
+  operations: [ImportInvoicedExpenses, ImportPaidExpenses]
+  relationships:
+  - kind: belongs_to
+    target: Deal
+    via: DealId
+  - kind: belongs_to
+    target: Company
+    via: Payee
+- name: ExchangeRate
+  aka: [FX Rate]
+  description: A currency exchange rate used for functional-currency translation.
+  operations: [ImportExchangeRates]
+  fields_observed: [Currency, Rate, EffectiveDate]
+- name: LesseeRate
+  description: A discount rate applied to lease calculations.
+  types: [IBR, Equity, Debt]
+  operations: [ImportLesseeRates]
+  note: >-
+    The Incremental Borrowing Rate (IBR) is the rate used for present-value classification and
+    remeasurement.
+  relationships:
+  - kind: belongs_to
+    target: Company
+- name: ReportRequest
+  id_field: ReportRequestId
+  description: >-
+    An asynchronous report or document generation job. Submitted with GenerateAsynch, polled with
+    GetReportStatus, and its output fetched with GetReportFile.
+  operations: [Generate, GenerateAsynch, GetReportStatus, GetReportFile]
+- name: User
+  description: >-
+    A federated Single Sign-On identity with an Access Control role and a ScopeOfAccess governing what it
+    can see and do. Provisioned only in SSO environments.
+  operations: [FederateUser, UpdateUser, RevokeUser]
+  roles_observed: [Power User, System Admin, LAStaff, RFP Administrator]
+  relationships:
+  - kind: belongs_to
+    target: Person
+common_structures:
+- name: AncillaryFields
+  description: >-
+    An extensibility block available on most records — repeated Attribute/Value pairs, each limited to 32
+    alphanumeric characters. Commonly carries the chart-of-accounts code for a participant company, or the
+    value of a configured custom attribute type.
+  applies_to: [Company, Person, Address, Deal, Asset]
+- name: Criteria
+  description: >-
+    The constraint element used by the Find* operations to limit which deals, assets, or contacts are
+    returned. There is no pagination — narrowing happens entirely through Criteria.
+  applies_to: [FindDeals, FindAssets, FindContacts]
+graph_notes:
+- >-
+  The read path and the write path are asymmetric. Writes are record-oriented and batched (Import*,
+  AddUpdate*), while reads are either narrow searches (Find*) or bulk report extraction (GenerateAsynch →
+  GetReportFile). There is no general-purpose "get object by id" operation for most entities.
+- >-
+  Reference data changes can be retroactive. UpdateDealStatus on a reference-data write declares which deal
+  states the change should be applied to, so an address or company edit can rewrite history across every
+  deal that record participates in.
+- >-
+  The customer's ERP is effectively part of the model. LedgerEntry flows outward via report export and
+  ExternalDocumentId flows back inward via CaptureDocumentId.
+render: null
+render_note: >-
+  No subway/ diagram exists for this repo. The graph above is the source of truth if one is generated
+  later.

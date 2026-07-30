@@ -1,0 +1,106 @@
+generated: '2026-07-19'
+method: searched
+source: >-
+  https://docs-leaseaccelerator.insightsoftware.com/hc/en-us/articles/47450362598413-26-3-Release-Notes,
+  https://docs-leaseaccelerator.insightsoftware.com/hc/en-us/sections (release notes series),
+  https://status.insightsoftware.com/, https://insightsoftware.com/legal/contracts/service-terms-and-documentation/
+description: >-
+  How the LeaseAccelerator platform and its API change over time: the release cadence and version scheme,
+  how retirements are announced, where availability is reported, and what commitments are published.
+  LeaseAccelerator is a single-tenant-per-customer hosted platform, so there is no independently versioned
+  API surface — API operations move with the platform release.
+
+versioning:
+  scheme: calendar-style platform release
+  format: 'YY.N for feature releases, YY.N.N for interim releases (example: 26.3, 26.2.1)'
+  current: '26.3'
+  current_date: '2026-07'
+  mechanism: >-
+    No version header, no version path segment, and no per-account version pinning. All customers on a
+    given environment run the same platform release, and API operations track it.
+  historical_scheme: >-
+    Prior to 2025 the scheme was YYRN (24R1, 24R2, 24R2.1, 24R2.2, 24R3). It changed to the dotted
+    calendar form with the 25.1 release.
+  cadence: >-
+    Roughly quarterly feature releases with interim releases in between. Observed 2025-2026 sequence: 25.1,
+    25.1.1 (March 2025), 25.2 (May 2025), 25.2.1 (June 2025), 25.3 (July 2025), 25.3.1 (September 2025),
+    25.4 (October 2025), 26.1 (January 2026), 26.1.1 (March 2026), 26.2 (April 2026, deployed 15 March
+    2026), 26.2.1 (June 2026), 26.3 (July 2026).
+  changelog: changelog/leaseaccelerator-changelog.yml
+
+deprecation:
+  policy_url: https://docs-leaseaccelerator.insightsoftware.com/hc/en-us/articles/47450362598413-26-3-Release-Notes
+  formal_policy_published: false
+  sunset_header: false
+  deprecation_header: false
+  rfc8594: false
+  mechanism: >-
+    Retirements are announced in the release notes under an explicit "Report Retirements" heading, naming
+    the retired surface and its replacement, and instructing customers to migrate. There is no RFC 8594
+    Sunset/Deprecation response header, no numeric deprecation window, and no separately published
+    deprecation policy document.
+  pattern: >-
+    The observed pattern is versioned replacement rather than removal: a "v2" successor is shipped and runs
+    alongside the original for one or more releases, then the original is retired in a later release note.
+  recent_retirements:
+  - release: '26.3'
+    date: '2026-07'
+    retired:
+    - name: User Activity Log report
+      superseded_by: User Activity Log v2
+    - name: Transaction Report
+      superseded_by: Transaction Report v2
+    migration_note: >-
+      Scheduled reports based on the original versions should be rescheduled using the corresponding v2
+      reports.
+    evidence: https://docs-leaseaccelerator.insightsoftware.com/hc/en-us/articles/47450362598413-26-3-Release-Notes
+  successors_in_flight:
+  - name: BYOR User Admin report
+    superseded_by: User Admin v2
+    introduced: '26.2.1'
+    retired: false
+    note: The original remains available alongside v2 as of the 26.2.1 release.
+  deprecated_operations:
+    source: openapi/leaseaccelerator-api-openapi.yml
+    count: 0
+    note: >-
+      No operation in the published API Methods reference is flagged deprecated. The API operation set has
+      been additive across the observed release history.
+
+status_page:
+  url: https://status.insightsoftware.com/
+  scope: >-
+    insightsoftware platform-wide status page covering LeaseAccelerator alongside the other insightsoftware
+    products. There is no LeaseAccelerator-only status page.
+  verified: '2026-07-19'
+  http_status: 200
+
+sla:
+  url: https://insightsoftware.com/legal/contracts/service-terms-and-documentation/
+  public_uptime_target: null
+  notes: >-
+    insightsoftware publishes service terms and documentation covering its products, but no numeric public
+    uptime percentage for LeaseAccelerator. Availability commitments are handled in the customer contract.
+
+support:
+  url: https://help.insightsoftware.com/s/
+  docs: https://docs-leaseaccelerator.insightsoftware.com/hc/en-us/
+  note: >-
+    Environment provisioning is support-mediated. The developer documentation instructs callers to contact
+    LeaseAccelerator Support for the URL of any environment other than production (www).
+
+hosting:
+  provider: Amazon Web Services
+  note: >-
+    "LeaseAccelerator is hosted on Amazon Web Services, the largest global web hosting service provider,
+    with an additional provider for backup and disaster recovery protection."
+  evidence: https://docs-leaseaccelerator.insightsoftware.com/hc/en-us/articles/33895893478925-About-LeaseAccelerator-Integrations
+
+ownership:
+  acquired_by: insightsoftware
+  acquired: '2024-07-11'
+  note: >-
+    LeaseAccelerator was acquired by insightsoftware in July 2024. Documentation, trust, status, legal, and
+    support surfaces have since migrated to insightsoftware-owned hosts; leaseaccelerator.com and
+    explore.leaseaccelerator.com now redirect to insightsoftware.com/leaseaccelerator/. The API host
+    www.leaseaccelerator.com/lease_accelerator/ remains live and is unchanged.

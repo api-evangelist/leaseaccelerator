@@ -1,0 +1,304 @@
+generated: '2026-07-19'
+method: searched
+source: >-
+  https://docs-leaseaccelerator.insightsoftware.com/hc/en-us/articles/33895814655245-Application-Programming-Interface-API-for-Developers
+  (response envelope), https://docs-leaseaccelerator.insightsoftware.com/hc/en-us/articles/33895887692685-Import-Validation-Message-Matrix
+  (validation message catalog), openapi/leaseaccelerator-api-openapi.yml
+description: >-
+  The LeaseAccelerator error surface. LeaseAccelerator does not use RFC 9457 problem+json, and it does not
+  signal application failures through HTTP status codes: an operation that fails still returns an
+  <APIResponse> document, and the caller must read the Status and Context fields inside it. Beyond the
+  envelope, the substantive error vocabulary is the import validation message catalog, whose messages are
+  emitted by the bulk import operations and by the equivalent workbook (CIW/PIW) uploads.
+format: proprietary-xml
+rfc9457: false
+content_type: application/xml
+
+envelope:
+  element: APIResponse
+  shape: |
+    <APIResponse>
+        <Response>
+            <RequestId>requestId</RequestId>
+            <Status>requestStatusCode</Status>
+            <Context>requestStatusDetails</Context>
+        </Response>
+        <Payload>operationSpecificResponse</Payload>
+    </APIResponse>
+  fields:
+  - name: RequestId
+    type: text
+    description: The unique identifier specified in the request, echoed back whether successful or not.
+  - name: Status
+    type: integer
+    description: >-
+      A code indicating success or failure. Zero (0) always means success. Any other value represents an
+      error. LeaseAccelerator does not publish an enumerated registry of non-zero Status values.
+  - name: Context
+    type: text
+    description: >-
+      A description of the overall request results. "Ok" always means success. Any other value is a
+      description of the error encountered.
+
+http_statuses:
+  note: >-
+    HTTP status is a transport signal only; application errors travel in the envelope.
+  statuses:
+  - code: 200
+    meaning: >-
+      Request was accepted and processed by the API. Inspect Response/Status — a non-zero value is an
+      application error even though the HTTP status is 200.
+  - code: 405
+    meaning: Method not allowed. All LeaseAccelerator API operations are POST-only.
+  - code: 500
+    meaning: Server error, or an invalid/expired security token.
+
+severities:
+  Error: >-
+    A condition that prevents the record (or the whole request, depending on ErrorPolicy) from being
+    processed. Must be resolved before the data can be imported.
+  Warning: >-
+    An alert that something may need correcting but that does not by itself prevent processing. Warnings
+    are always reported in the APIResponse even when WarningPolicy is Ignore.
+
+handling:
+  description: >-
+    The caller chooses the failure semantics per request rather than accepting a fixed server policy.
+  error_policy:
+    Stop: All processing stops immediately and prior actions for this request are rolled back. Default.
+    Skip: For multi-record requests, the offending record is skipped and the rest are processed.
+  warning_policy:
+    Stop: All processing stops immediately and prior actions for this request are rolled back.
+    Ignore: Processing continues; warnings are still reported in the APIResponse. Default.
+    Skip: For multi-record requests, the offending record is skipped and the rest are processed.
+  note: >-
+    Skip is not supported for operations that accept only one record in the Payload.
+  detail: conventions/leaseaccelerator-conventions.yml
+
+validation_messages:
+  docs: https://docs-leaseaccelerator.insightsoftware.com/hc/en-us/articles/33895887692685-Import-Validation-Message-Matrix
+  note: >-
+    Messages are keyed by text, not by a numeric code. The catalog below reproduces the documented common
+    messages verbatim; it is a representative selection, not the complete matrix — consult the live
+    Import Validation Message Matrix for the full list.
+  scopes:
+  - key: CIW
+    name: Client Information Workbook
+    description: Reference and master data — companies, people, addresses.
+  - key: PIW
+    name: Portfolio Intake Workbook
+    description: Deals, schedules, assets, payments, and related expenses.
+  messages:
+  - message: Company Exists
+    severity: Error
+    scope: CIW
+    reason: The Company Name listed on your import file already exists in the system.
+    remediation: >-
+      Verify that this company exists in the system by searching for it in the LeaseAccelerator
+      application. You cannot update company information using a CIW.
+  - message: A company can only be configured with one parent company
+    severity: Error
+    scope: CIW
+    reason: You have listed a Company more than once but with different Parent Name information.
+    remediation: >-
+      Verify that each time you list a company, all information except Company Role Type, Ledger Code, and
+      Functional Currency are identical. This includes Parent Name.
+  - message: 'Invalid role: Site'
+    severity: Error
+    scope: CIW
+    reason: The Participant role you entered in role type isn't valid.
+    remediation: >-
+      Check that drop-down menus in the LeaseAccelerator application have not been overridden. If this is a
+      custom participant, verify that it has been configured and that you are entering the role type name
+      accurately.
+  - message: Insufficient ship to address specified
+    severity: Error
+    scope: CIW
+    reason: You did not populate the minimum address fields of City and Country.
+    remediation: >-
+      Verify that if you are listing address information, that you have, at a minimum, populated the City
+      and Country.
+  - message: 'Invalid Geographic Area: United States of America'
+    severity: Error
+    scope: CIW
+    reason: The country you indicated in GEO has not been configured as a GEO in LeaseAccelerator.
+    remediation: >-
+      Verify that you have not overridden the drop-down menus and that you already configured the country
+      as a GEO in LeaseAccelerator.
+  - message: Ship to address already exists but is not configured as a ship to address
+    severity: Error
+    scope: CIW
+    reason: The address listed is in the system, but it is not a ShipTo.
+    remediation: Go to the address record in LeaseAccelerator and check the ShipTo box.
+  - message: Name exists, address, BU, and party role type will be updated
+    severity: Warning
+    scope: CIW
+    reason: The name is already in LeaseAccelerator, but you are adding information to the record.
+    remediation: This is a warning; you don't need to change anything in order to import.
+  - message: Functional currency is not provided
+    severity: Warning
+    scope: CIW
+    reason: You did not specify the Functional Currency for an Entity.
+    remediation: >-
+      This is a warning; you don't need to change anything in order to import but it is advised to include
+      Functional currencies for all Entities.
+  - message: Schedule does not exist
+    severity: Error
+    scope: PIW
+    reason: There is a Schedule Number on your import file that does not exist in the system.
+    remediation: >-
+      Verify that you have the right Schedule Number, no leading or trailing spaces and correct spelling
+      where applicable.
+  - message: Invalid Reporting Area
+    severity: Error
+    scope: PIW
+    reason: The Reporting Area you entered is not set up as a Reporting Area.
+    remediation: Verify that you configured the Company as an Area in the system.
+  - message: Invalid ShipToKey
+    severity: Error
+    scope: PIW
+    reason: >-
+      The value you input in the Facility Code field does not match what has been configured in your ShipTo
+      addresses.
+    remediation: >-
+      Verify that the Facility Code is configured in the system and that you've input the name exactly as
+      it is in the system.
+  - message: No payment information specified
+    severity: Error
+    scope: PIW
+    reason: The payment and LRF fields on Schedule tab were left blank.
+    remediation: Verify that you've populated either the LRF or the Payment on the Schedule tab.
+  - message: GL Code must be provided
+    severity: Error
+    scope: PIW
+    reason: The GL Code field is blank.
+    remediation: Verify that you have entered the correct GL Code (Coding Convention) on the Details tab.
+  - message: Cost center is required for assets
+    severity: Error
+    scope: PIW
+    reason: The Cost Center field is blank. Cost Center is a required field on the Details tab of the PIW.
+    remediation: Verify that you've populated the Cost Center field on the Details tab.
+  - message: Payment basis for assets with rent has to be Cost Basis not Available
+    severity: Error
+    scope: PIW
+    reason: >-
+      You've populated fields suggesting the lease is UtilityBased or that has Unit Rent, but also
+      populated the LRF field. For these types of leases, LRF must be blank.
+    remediation: >-
+      If the lease is Utility-based or using Unit Rent, clear the LRF field. If the lease is neither, clear
+      those fields so that you may use LRF and Unit Price to determine the payment.
+  - message: 'Both ShipTo key: [company name] and [address] specified. Enter either a ShipTo key or valid address.'
+    severity: Error
+    scope: PIW
+    reason: Both Facility Code and ShipTo address fields are populated.
+    remediation: >-
+      Use either a Facility Code and clear all other ShipTo Address fields, or clear Facility Code and only
+      use ShipTo address fields.
+  - message: >-
+      Partial building flag only applies real estate assets. Select Product Category or type Real Estate to
+      proceed.
+    severity: Error
+    scope: PIW
+    reason: You've populated the Partial Bldg Flag field on Schedule tab for a non-real-estate lease.
+    remediation: >-
+      Verify that the Partial Bldg Flag is not populated or that you have the correct Product Category
+      selected on the Details tab.
+  - message: >-
+      The entered GL Code is not configured in all ledgers the deal is being booked into. Please verify the
+      GL Code is set up with the required Accounting Codes before proceeding.
+    severity: Error
+    scope: PIW
+    reason: >-
+      You've populated the GL Code field with a Coding Convention that has not been configured in
+      LeaseAccelerator.
+    remediation: >-
+      Verify the GL Code (Coding Convention) is entered exactly as configured, that it is configured in all
+      ledgers the lease is being booked into, and that all 5 required account fields are populated.
+  - message: Number of total payments does not match duration
+    severity: Error
+    scope: PIW
+    reason: The number of step payments does not match the duration indicated on the Schedule tab.
+    remediation: >-
+      Verify that you have included all valid steps on the Step Payments tab and that the total number of
+      payments equals the Duration listed on the Schedule tab.
+  - message: Invalid final step
+    severity: Error
+    scope: PIW
+    reason: The last step indicated on the Step Payments tab is incorrect.
+    remediation: >-
+      Verify that you have included all steps and that the last Payment starting number is accurate for the
+      number of payments.
+  - message: Missing first step on step payment
+    severity: Error
+    scope: PIW
+    reason: The first payment number on the Step Payment tab is not 1.
+    remediation: Verify that you've started with Payment Number 1 on the Step Payments tab.
+  - message: Invalid Related Expense subtype
+    severity: Error
+    scope: PIW
+    reason: The expense subtype selected is invalid for the expense type.
+    remediation: Select the Expense Type first, then select the subtype.
+  - message: Empty Related Expense payment frequency
+    severity: Error
+    scope: PIW
+    reason: You must specify a frequency for any related expenses.
+    remediation: Verify that you've populated the Frequency field on any of the Related Expense tabs.
+  - message: Empty Related Expense payee
+    severity: Error
+    scope: PIW
+    reason: You must indicate a payee for related expenses.
+    remediation: Verify that you've populated the Payee field on the Related Expense tabs.
+  - message: >-
+      1st Scheduled Payment date cannot come before lease start date or depreciation start date or
+      available date
+    severity: Error
+    scope: PIW
+    reason: The date populated for the 1st Scheduled Payment is prior to the lease start date.
+    remediation: >-
+      Verify that the date entered is not prior to the lease start date. It must equal the lease start date
+      or be after commencement.
+  - message: Deal Ship To address does not exist and will be added.
+    severity: Warning
+    scope: PIW
+    reason: >-
+      You entered a deal-level address that has not been configured in the system and the new ShipTo will
+      be added.
+    remediation: >-
+      If this is a ShipTo, there is no need to configure/import this address as a ShipTo in the system.
+      Proceed with the import of the PIW.
+  - message: No asset owner specified
+    severity: Warning
+    scope: PIW
+    reason: Asset Owner field is blank on PIW.
+    remediation: >-
+      Asset Owner is a required field; you should populate it on the PIW. Asset Owners may be critical to
+      proper portfolio and EOT management.
+  - message: >-
+      Lease starts in a closed period; catch up entries will be posted in the first open period
+    severity: Warning
+    scope: PIW
+    reason: You are importing a lease with a Lease Start Date in a closed period.
+    remediation: >-
+      This is a notice so you will understand that you are going to see adjusting entries for this lease
+      from lease inception in the first open period.
+  - message: 'No Thresholds or Default economic life is set for the Geo and product category'
+    severity: Warning
+    scope: PIW
+    reason: >-
+      You have selected a Geo/Product Category combination where configuration has not been completed for
+      either Asset Types or Policy Thresholds.
+    remediation: >-
+      Verify the Geo and Product Category. Power Users and System Admins can update Asset Types and Policy
+      Thresholds in the Configuration Settings workspace.
+  - message: No unit price specified, assuming 0.00
+    severity: Warning
+    scope: PIW
+    reason: >-
+      You've indicated Unit Rent for at least one asset on a schedule but not all of them. LeaseAccelerator
+      requires that if one asset has Unit Rent, all assets on that schedule must have Unit Rent populated.
+    remediation: Verify that all Unit Rent fields for all assets on the schedule are populated.
+
+gaps:
+  - No enumerated registry of non-zero Response/Status integer codes is published.
+  - Validation messages are identified by text rather than by a stable machine-readable code.
+  - No RFC 9457 problem+json representation and no type URIs.
