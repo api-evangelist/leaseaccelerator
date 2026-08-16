@@ -6,13 +6,14 @@
       "feed_url": "https://help.insightsoftware.com/s/",
       "title": "",
       "saved": 0,
-      "method": "none"
+      "method": "none",
+      "error": "parse_failed"
     },
     {
       "source": "https://insightsoftware.com/feed/",
       "feed_url": "https://insightsoftware.com/feed/",
       "title": "",
-      "saved": 0,
+      "saved": 1,
       "method": "feed"
     },
     {
@@ -23,6 +24,6 @@
       "method": "discovered"
     }
   ],
-  "post_count": 12,
-  "fetched": "2026-08-06T14:08:46Z"
+  "post_count": 13,
+  "fetched": "2026-08-15T12:11:08Z"
 }
