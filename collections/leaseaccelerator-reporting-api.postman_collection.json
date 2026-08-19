@@ -1,0 +1,1090 @@
+{
+  "item": [
+    {
+      "id": "14887eb4-2b8f-4054-8b30-019d7e63d206",
+      "name": "Reporting",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "ea70899a-ed26-4806-b3a6-2eb4573c4a2b",
+          "name": "Generate Report or Document",
+          "request": {
+            "name": "Generate Report or Document",
+            "description": {
+              "content": "This method consists of the set of parameters needed to generate the requested document or report. See Generate Report Asynch for additional report generation options.\n\nOperation key: `Generate`. Reference: https://docs-leaseaccelerator.insightsoftware.com/hc/en-us/articles/33895853166093-API-Methods",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "Generate"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "LeaseAccelerator environment; www is production.",
+                  "type": "any",
+                  "value": "{{environment}}",
+                  "key": "environment"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "multipart/form-data"
+              },
+              {
+                "key": "Accept",
+                "value": "application/xml"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "token",
+                  "value": "<string>",
+                  "type": "text",
+                  "description": "(Required) The security token returned by the SAML2 authentication service at /auth/api."
+                },
+                {
+                  "key": "file",
+                  "value": "<string>",
+                  "type": "text",
+                  "description": "(Required) The XML <APIRequest> document carrying the Request envelope (RequestId, WarningPolicy, ErrorPolicy) and the operation-specific <Payload>."
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "88f57bae-c35f-4bac-9980-a02b700b1263",
+              "name": "An <APIResponse> document. A Status of 0 with Context \"Ok\" indicates success; any other Status value is an error described by Context.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "Generate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "token",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "LeaseAccelerator environment; www is production.",
+                      "type": "any",
+                      "value": "{{environment}}",
+                      "key": "environment"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/xml"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "description": {
+                        "content": "(Required) The security token returned by the SAML2 authentication service at /auth/api.",
+                        "type": "text/plain"
+                      },
+                      "key": "token",
+                      "value": "<string>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "(Required) The XML <APIRequest> document carrying the Request envelope (RequestId, WarningPolicy, ErrorPolicy) and the operation-specific <Payload>.",
+                        "type": "text/plain"
+                      },
+                      "key": "file",
+                      "value": "<string>",
+                      "type": "text"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/xml"
+                }
+              ],
+              "body": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<APIResponse>\n  <Response>\n    <RequestId>(string)</RequestId>\n    <Status>(integer)</Status>\n    <Context>(string)</Context>\n  </Response>\n  <Payload>(string)</Payload>\n</APIResponse>",
+              "cookie": [],
+              "_postman_previewlanguage": "xml"
+            },
+            {
+              "id": "435d98cf-0ff7-4d4b-a776-c4d32fc45bf7",
+              "name": "Method not allowed — the API accepts POST only.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "Generate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "token",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "LeaseAccelerator environment; www is production.",
+                      "type": "any",
+                      "value": "{{environment}}",
+                      "key": "environment"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "description": {
+                        "content": "(Required) The security token returned by the SAML2 authentication service at /auth/api.",
+                        "type": "text/plain"
+                      },
+                      "key": "token",
+                      "value": "<string>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "(Required) The XML <APIRequest> document carrying the Request envelope (RequestId, WarningPolicy, ErrorPolicy) and the operation-specific <Payload>.",
+                        "type": "text/plain"
+                      },
+                      "key": "file",
+                      "value": "<string>",
+                      "type": "text"
+                    }
+                  ]
+                }
+              },
+              "status": "Method Not Allowed",
+              "code": 405,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "826b2073-8190-4c9a-be83-a533f1f6f493",
+              "name": "Server error, or an invalid/expired security token.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "Generate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "token",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "LeaseAccelerator environment; www is production.",
+                      "type": "any",
+                      "value": "{{environment}}",
+                      "key": "environment"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "description": {
+                        "content": "(Required) The security token returned by the SAML2 authentication service at /auth/api.",
+                        "type": "text/plain"
+                      },
+                      "key": "token",
+                      "value": "<string>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "(Required) The XML <APIRequest> document carrying the Request envelope (RequestId, WarningPolicy, ErrorPolicy) and the operation-specific <Payload>.",
+                        "type": "text/plain"
+                      },
+                      "key": "file",
+                      "value": "<string>",
+                      "type": "text"
+                    }
+                  ]
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "8682665d-76a7-49f4-bbec-73f7120f4d15",
+          "name": "Generate Report Asynch",
+          "request": {
+            "name": "Generate Report Asynch",
+            "description": {
+              "content": "This method is like the Generate method as it consists of the set of parameters needed to generate the requested document or report. The only difference between the Generate API and the GenerateAsynch API, is that instead of the report being returned directly to the screen, this API will just make the call and return the request id. Run Generate Report Asynch which will return a request id. Use request id returned as input to the Get Report Status operation. Rerun until Get Report Status returns\n\nOperation key: `GenerateAsynch`. Reference: https://docs-leaseaccelerator.insightsoftware.com/hc/en-us/articles/33895853166093-API-Methods",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "GenerateAsynch"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "LeaseAccelerator environment; www is production.",
+                  "type": "any",
+                  "value": "{{environment}}",
+                  "key": "environment"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "multipart/form-data"
+              },
+              {
+                "key": "Accept",
+                "value": "application/xml"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "token",
+                  "value": "<string>",
+                  "type": "text",
+                  "description": "(Required) The security token returned by the SAML2 authentication service at /auth/api."
+                },
+                {
+                  "key": "file",
+                  "value": "<string>",
+                  "type": "text",
+                  "description": "(Required) The XML <APIRequest> document carrying the Request envelope (RequestId, WarningPolicy, ErrorPolicy) and the operation-specific <Payload>."
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "1054b57c-00c9-4170-ab50-82fd5bbb27a3",
+              "name": "An <APIResponse> document. A Status of 0 with Context \"Ok\" indicates success; any other Status value is an error described by Context.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "GenerateAsynch"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "token",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "LeaseAccelerator environment; www is production.",
+                      "type": "any",
+                      "value": "{{environment}}",
+                      "key": "environment"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/xml"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "description": {
+                        "content": "(Required) The security token returned by the SAML2 authentication service at /auth/api.",
+                        "type": "text/plain"
+                      },
+                      "key": "token",
+                      "value": "<string>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "(Required) The XML <APIRequest> document carrying the Request envelope (RequestId, WarningPolicy, ErrorPolicy) and the operation-specific <Payload>.",
+                        "type": "text/plain"
+                      },
+                      "key": "file",
+                      "value": "<string>",
+                      "type": "text"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/xml"
+                }
+              ],
+              "body": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<APIResponse>\n  <Response>\n    <RequestId>(string)</RequestId>\n    <Status>(integer)</Status>\n    <Context>(string)</Context>\n  </Response>\n  <Payload>(string)</Payload>\n</APIResponse>",
+              "cookie": [],
+              "_postman_previewlanguage": "xml"
+            },
+            {
+              "id": "4c1ec590-cfc5-450e-aed6-05cf728b8564",
+              "name": "Method not allowed — the API accepts POST only.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "GenerateAsynch"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "token",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "LeaseAccelerator environment; www is production.",
+                      "type": "any",
+                      "value": "{{environment}}",
+                      "key": "environment"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "description": {
+                        "content": "(Required) The security token returned by the SAML2 authentication service at /auth/api.",
+                        "type": "text/plain"
+                      },
+                      "key": "token",
+                      "value": "<string>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "(Required) The XML <APIRequest> document carrying the Request envelope (RequestId, WarningPolicy, ErrorPolicy) and the operation-specific <Payload>.",
+                        "type": "text/plain"
+                      },
+                      "key": "file",
+                      "value": "<string>",
+                      "type": "text"
+                    }
+                  ]
+                }
+              },
+              "status": "Method Not Allowed",
+              "code": 405,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "79368a57-cf4c-40c5-9167-4d238389d79e",
+              "name": "Server error, or an invalid/expired security token.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "GenerateAsynch"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "token",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "LeaseAccelerator environment; www is production.",
+                      "type": "any",
+                      "value": "{{environment}}",
+                      "key": "environment"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "description": {
+                        "content": "(Required) The security token returned by the SAML2 authentication service at /auth/api.",
+                        "type": "text/plain"
+                      },
+                      "key": "token",
+                      "value": "<string>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "(Required) The XML <APIRequest> document carrying the Request envelope (RequestId, WarningPolicy, ErrorPolicy) and the operation-specific <Payload>.",
+                        "type": "text/plain"
+                      },
+                      "key": "file",
+                      "value": "<string>",
+                      "type": "text"
+                    }
+                  ]
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "3989c00e-b6c0-430c-b23b-66162779169b",
+          "name": "Get Report Status",
+          "request": {
+            "name": "Get Report Status",
+            "description": {
+              "content": "The GetReportStatus operation is used to fetch the status of Generate Report Asynch based on the request id. Run Generate Report Asynch which will return a request id. Use request id returned as input to the Get Report Status operation. Rerun until Get Report Status returns a status of Success and non-null Endtime. Next retrieve the actual file using request id as input to the Get Report File operation. The request payload is as below.\n\nOperation key: `GetReportStatus`. Reference: https://docs-leaseaccelerator.insightsoftware.com/hc/en-us/articles/33895853166093-API-Methods",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "GetReportStatus"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "LeaseAccelerator environment; www is production.",
+                  "type": "any",
+                  "value": "{{environment}}",
+                  "key": "environment"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "multipart/form-data"
+              },
+              {
+                "key": "Accept",
+                "value": "application/xml"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "token",
+                  "value": "<string>",
+                  "type": "text",
+                  "description": "(Required) The security token returned by the SAML2 authentication service at /auth/api."
+                },
+                {
+                  "key": "file",
+                  "value": "<string>",
+                  "type": "text",
+                  "description": "(Required) The XML <APIRequest> document carrying the Request envelope (RequestId, WarningPolicy, ErrorPolicy) and the operation-specific <Payload>."
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "fdcb4d5b-56c0-42ff-9656-7f0855eb2949",
+              "name": "An <APIResponse> document. A Status of 0 with Context \"Ok\" indicates success; any other Status value is an error described by Context.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "GetReportStatus"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "token",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "LeaseAccelerator environment; www is production.",
+                      "type": "any",
+                      "value": "{{environment}}",
+                      "key": "environment"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/xml"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "description": {
+                        "content": "(Required) The security token returned by the SAML2 authentication service at /auth/api.",
+                        "type": "text/plain"
+                      },
+                      "key": "token",
+                      "value": "<string>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "(Required) The XML <APIRequest> document carrying the Request envelope (RequestId, WarningPolicy, ErrorPolicy) and the operation-specific <Payload>.",
+                        "type": "text/plain"
+                      },
+                      "key": "file",
+                      "value": "<string>",
+                      "type": "text"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/xml"
+                }
+              ],
+              "body": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<APIResponse>\n  <Response>\n    <RequestId>(string)</RequestId>\n    <Status>(integer)</Status>\n    <Context>(string)</Context>\n  </Response>\n  <Payload>(string)</Payload>\n</APIResponse>",
+              "cookie": [],
+              "_postman_previewlanguage": "xml"
+            },
+            {
+              "id": "637fc0a9-ad0e-4a64-8f80-eb31d6bc633a",
+              "name": "Method not allowed — the API accepts POST only.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "GetReportStatus"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "token",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "LeaseAccelerator environment; www is production.",
+                      "type": "any",
+                      "value": "{{environment}}",
+                      "key": "environment"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "description": {
+                        "content": "(Required) The security token returned by the SAML2 authentication service at /auth/api.",
+                        "type": "text/plain"
+                      },
+                      "key": "token",
+                      "value": "<string>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "(Required) The XML <APIRequest> document carrying the Request envelope (RequestId, WarningPolicy, ErrorPolicy) and the operation-specific <Payload>.",
+                        "type": "text/plain"
+                      },
+                      "key": "file",
+                      "value": "<string>",
+                      "type": "text"
+                    }
+                  ]
+                }
+              },
+              "status": "Method Not Allowed",
+              "code": 405,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "7ac7a15a-ec1b-4889-ba4e-0e1c068e832d",
+              "name": "Server error, or an invalid/expired security token.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "GetReportStatus"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "token",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "LeaseAccelerator environment; www is production.",
+                      "type": "any",
+                      "value": "{{environment}}",
+                      "key": "environment"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "description": {
+                        "content": "(Required) The security token returned by the SAML2 authentication service at /auth/api.",
+                        "type": "text/plain"
+                      },
+                      "key": "token",
+                      "value": "<string>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "(Required) The XML <APIRequest> document carrying the Request envelope (RequestId, WarningPolicy, ErrorPolicy) and the operation-specific <Payload>.",
+                        "type": "text/plain"
+                      },
+                      "key": "file",
+                      "value": "<string>",
+                      "type": "text"
+                    }
+                  ]
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "6c114ffc-9021-4ad1-b5fc-a4ccfc64a47a",
+          "name": "Get Report File",
+          "request": {
+            "name": "Get Report File",
+            "description": {
+              "content": "The GetReportFile operation is used to fetch the file generated by the Generate Report Asynch operation based on the request id. Run Generate Report Asynch which will return a request id. Use request id returned as input to the Get Report Status operation. Rerun until Get Report Status returns a status of Success and non-null Endtime. Retrieve the actual file using request id as input to the Get Report File operation. The request payload is as below.\n\nOperation key: `GetReportFile`. Reference: https://docs-leaseaccelerator.insightsoftware.com/hc/en-us/articles/33895853166093-API-Methods",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "GetReportFile"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "LeaseAccelerator environment; www is production.",
+                  "type": "any",
+                  "value": "{{environment}}",
+                  "key": "environment"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "multipart/form-data"
+              },
+              {
+                "key": "Accept",
+                "value": "application/xml"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "token",
+                  "value": "<string>",
+                  "type": "text",
+                  "description": "(Required) The security token returned by the SAML2 authentication service at /auth/api."
+                },
+                {
+                  "key": "file",
+                  "value": "<string>",
+                  "type": "text",
+                  "description": "(Required) The XML <APIRequest> document carrying the Request envelope (RequestId, WarningPolicy, ErrorPolicy) and the operation-specific <Payload>."
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "b9433a87-2fdf-480e-8e78-fc004f57dc00",
+              "name": "An <APIResponse> document. A Status of 0 with Context \"Ok\" indicates success; any other Status value is an error described by Context.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "GetReportFile"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "token",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "LeaseAccelerator environment; www is production.",
+                      "type": "any",
+                      "value": "{{environment}}",
+                      "key": "environment"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/xml"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "description": {
+                        "content": "(Required) The security token returned by the SAML2 authentication service at /auth/api.",
+                        "type": "text/plain"
+                      },
+                      "key": "token",
+                      "value": "<string>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "(Required) The XML <APIRequest> document carrying the Request envelope (RequestId, WarningPolicy, ErrorPolicy) and the operation-specific <Payload>.",
+                        "type": "text/plain"
+                      },
+                      "key": "file",
+                      "value": "<string>",
+                      "type": "text"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/xml"
+                }
+              ],
+              "body": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<APIResponse>\n  <Response>\n    <RequestId>(string)</RequestId>\n    <Status>(integer)</Status>\n    <Context>(string)</Context>\n  </Response>\n  <Payload>(string)</Payload>\n</APIResponse>",
+              "cookie": [],
+              "_postman_previewlanguage": "xml"
+            },
+            {
+              "id": "37bc259c-2acb-46c0-b68f-c1634971c345",
+              "name": "Method not allowed — the API accepts POST only.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "GetReportFile"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "token",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "LeaseAccelerator environment; www is production.",
+                      "type": "any",
+                      "value": "{{environment}}",
+                      "key": "environment"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "description": {
+                        "content": "(Required) The security token returned by the SAML2 authentication service at /auth/api.",
+                        "type": "text/plain"
+                      },
+                      "key": "token",
+                      "value": "<string>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "(Required) The XML <APIRequest> document carrying the Request envelope (RequestId, WarningPolicy, ErrorPolicy) and the operation-specific <Payload>.",
+                        "type": "text/plain"
+                      },
+                      "key": "file",
+                      "value": "<string>",
+                      "type": "text"
+                    }
+                  ]
+                }
+              },
+              "status": "Method Not Allowed",
+              "code": 405,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "2d95a465-0aec-4acc-814c-069e5dcf7456",
+              "name": "Server error, or an invalid/expired security token.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "GetReportFile"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "token",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "LeaseAccelerator environment; www is production.",
+                      "type": "any",
+                      "value": "{{environment}}",
+                      "key": "environment"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "description": {
+                        "content": "(Required) The security token returned by the SAML2 authentication service at /auth/api.",
+                        "type": "text/plain"
+                      },
+                      "key": "token",
+                      "value": "<string>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "(Required) The XML <APIRequest> document carrying the Request envelope (RequestId, WarningPolicy, ErrorPolicy) and the operation-specific <Payload>.",
+                        "type": "text/plain"
+                      },
+                      "key": "file",
+                      "value": "<string>",
+                      "type": "text"
+                    }
+                  ]
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "description": {
+        "content": "LeaseAccelerator environment; www is production.",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "www",
+      "key": "environment"
+    },
+    {
+      "type": "string",
+      "value": "https://{{environment}}.leaseaccelerator.com/lease_accelerator/api/LeaseAccelerator",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "token"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "query"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "3ca5645b-4b75-4b13-b55e-4dcb22139d73",
+    "name": "LeaseAccelerator Documents Reporting API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The LeaseAccelerator API combines the simplicity of REST requests with the data exchange capabilities of XML Remote Procedure Calls (RPC). Each request is stateless and multiple method requests can be submitted concurrently from the same secure session.\n\nAccess is secured by SAML2. Before submitting API requests you authenticate through the LeaseAccelerator SAML2 authentication layer (service provider URL `https://{environment}.leaseaccelerator.com/auth/api`, ECP mode against your own identity provider) and receive a text security token. Requests are then POSTed to `https://{environment}.leaseaccelerator.com/lease_accelerator/api/LeaseAccelerator/{operation}` with the `token` and `file` form fields, where `file` carries an `<APIRequest>` document.\n\nThis description was generated by the API Evangelist enrichment pipeline from the publicly published LeaseAccelerator developer documentation. Operation keys, the URL template, the authentication model, and the request/response envelopes are taken verbatim from that documentation; per-field payload schemas are documented per operation in the API Methods reference and are not reproduced here.\n\nContact Support:\n Name: LeaseAccelerator Support (insightsoftware)",
+      "type": "text/plain"
+    }
+  }
+}

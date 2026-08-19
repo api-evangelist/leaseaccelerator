@@ -1,0 +1,104 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "LeaseAccelerator Documents User Provisioning API",
+    "version": "26.3"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "token",
+      "value": "{{token}}",
+      "placement": "query"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "User Provisioning",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Federate User",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{environment}.leaseaccelerator.com/lease_accelerator/api/LeaseAccelerator/FederateUser",
+            "body": {
+              "type": "multipart-form",
+              "data": [
+                {
+                  "name": "token",
+                  "type": "text",
+                  "value": ""
+                },
+                {
+                  "name": "file",
+                  "type": "text",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "This method is used to provision credentials in LeaseAccelerator and is intended for use only in environments where Single Sign-On (SSO) is in use.\n\nOperation key: `FederateUser`. Reference: https://docs-leaseaccelerator.insightsoftware.com/hc/en-us/articles/33895853166093-API-Methods"
+        },
+        {
+          "info": {
+            "name": "Revoke User Credentials",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{environment}.leaseaccelerator.com/lease_accelerator/api/LeaseAccelerator/RevokeUser",
+            "body": {
+              "type": "multipart-form",
+              "data": [
+                {
+                  "name": "token",
+                  "type": "text",
+                  "value": ""
+                },
+                {
+                  "name": "file",
+                  "type": "text",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "This method is used to revoke credentials in LeaseAccelerator and is intended for use only in environments where Single Sign-On (SSO) is in use.\n\nOperation key: `RevokeUser`. Reference: https://docs-leaseaccelerator.insightsoftware.com/hc/en-us/articles/33895853166093-API-Methods"
+        },
+        {
+          "info": {
+            "name": "Update User Credentials",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{environment}.leaseaccelerator.com/lease_accelerator/api/LeaseAccelerator/UpdateUser",
+            "body": {
+              "type": "multipart-form",
+              "data": [
+                {
+                  "name": "token",
+                  "type": "text",
+                  "value": ""
+                },
+                {
+                  "name": "file",
+                  "type": "text",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "The UpdateUser operation is used to update credentials in LeaseAccelerator and is intended for use only in environments where Single Sign-On (SSO) is in use. The ScopeOfAccess and ScopeOfLedgers attributes will replace any current privileges for the specified user.\n\nOperation key: `UpdateUser`. Reference: https://docs-leaseaccelerator.insightsoftware.com/hc/en-us/articles/33895853166093-API-Methods"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

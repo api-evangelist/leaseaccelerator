@@ -1,0 +1,234 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "LeaseAccelerator Documents Reference Data API",
+    "version": "26.3"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "token",
+      "value": "{{token}}",
+      "placement": "query"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Reference Data",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Add/Update Address",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{environment}.leaseaccelerator.com/lease_accelerator/api/LeaseAccelerator/AddUpdateAddress",
+            "body": {
+              "type": "multipart-form",
+              "data": [
+                {
+                  "name": "token",
+                  "type": "text",
+                  "value": ""
+                },
+                {
+                  "name": "file",
+                  "type": "text",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "This method may be used to update existing addresses and/or to add new addresses. Addresses are specific workplaces in your organization where employees work and/or equipment may be physically located or shipped to. This would also include the physical location of any leased Real Estate. They are typically associated with a Lessee, Entity, or Business Unit. (There may be a 1: n relationship because companies may have multiple teams “sitting” at a single location.)\n\nOperation key: `AddUpdateAddre"
+        },
+        {
+          "info": {
+            "name": "Add/Update Company",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{environment}.leaseaccelerator.com/lease_accelerator/api/LeaseAccelerator/AddUpdateCompany",
+            "body": {
+              "type": "multipart-form",
+              "data": [
+                {
+                  "name": "token",
+                  "type": "text",
+                  "value": ""
+                },
+                {
+                  "name": "file",
+                  "type": "text",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "This method may be used to update existing companies and/or to add new companies. The Companies tab defines those companies that are a part of your leasing program. Each company, however, may perform a different role or function. Examples include: Lessees: The legal party to the agreement leasing the equipment or renting the real estate Funders: Also referred to as lessors: they provide the cash to finance the equipment purchase through a lease agreement Entity: Organization you consider to be t"
+        },
+        {
+          "info": {
+            "name": "Add/Update Cost Centers",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{environment}.leaseaccelerator.com/lease_accelerator/api/LeaseAccelerator/AddUpdateCostCenters",
+            "body": {
+              "type": "multipart-form",
+              "data": [
+                {
+                  "name": "token",
+                  "type": "text",
+                  "value": ""
+                },
+                {
+                  "name": "file",
+                  "type": "text",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "The AddUpdateCostCenters operation is used to add a new costcenter or update an existing costcenter in LeaseAccelerator. The adding of costcenter is similar to the the functionality ImportCostCenters in BulkImport screen using the spreadsheet.\n\nOperation key: `AddUpdateCostCenters`. Reference: https://docs-leaseaccelerator.insightsoftware.com/hc/en-us/articles/33895853166093-API-Methods"
+        },
+        {
+          "info": {
+            "name": "Add/Update Person",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{environment}.leaseaccelerator.com/lease_accelerator/api/LeaseAccelerator/AddUpdatePerson",
+            "body": {
+              "type": "multipart-form",
+              "data": [
+                {
+                  "name": "token",
+                  "type": "text",
+                  "value": ""
+                },
+                {
+                  "name": "file",
+                  "type": "text",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "This method may be used to update existing people and/or to add new people. Many people participate in your leasing program and have different roles. These people may or may not be users of the system. LeaseAccelerator captures these people so that they can receive notifications or other information important to their function. Examples of the roles that people may play and therefore need to be configured in the system are: Asset Owners: Employees who have fiduciary responsibility for the main\n\n"
+        },
+        {
+          "info": {
+            "name": "Define Reference Data",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{environment}.leaseaccelerator.com/lease_accelerator/api/LeaseAccelerator/DefineReferenceData",
+            "body": {
+              "type": "multipart-form",
+              "data": [
+                {
+                  "name": "token",
+                  "type": "text",
+                  "value": ""
+                },
+                {
+                  "name": "file",
+                  "type": "text",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "The DefineReferenceData operation. See the API Methods reference for the full request and response payload.\n\nOperation key: `DefineReferenceData`. Reference: https://docs-leaseaccelerator.insightsoftware.com/hc/en-us/articles/33895853166093-API-Methods"
+        },
+        {
+          "info": {
+            "name": "Import Addresses",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{environment}.leaseaccelerator.com/lease_accelerator/api/LeaseAccelerator/ImportAddresses",
+            "body": {
+              "type": "multipart-form",
+              "data": [
+                {
+                  "name": "token",
+                  "type": "text",
+                  "value": ""
+                },
+                {
+                  "name": "file",
+                  "type": "text",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "This method may be used to import addresses. This method is similar to the functionality when using the “Address tab” on the CIW. Note: NOTE: For Company addresses (i.e., the company tab on the CIW), use the Import Company method. For People addresses (i.e., the people tab on the CIW), use the Import People method. Addresses are specific workplaces in your organization where employees work and/or equipment may be physically located or shipped to. This would also include the physical location\n\nOp"
+        },
+        {
+          "info": {
+            "name": "Import Companies",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{environment}.leaseaccelerator.com/lease_accelerator/api/LeaseAccelerator/ImportCompanies",
+            "body": {
+              "type": "multipart-form",
+              "data": [
+                {
+                  "name": "token",
+                  "type": "text",
+                  "value": ""
+                },
+                {
+                  "name": "file",
+                  "type": "text",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "This method may be used to add new companies. This method is similar to the functionality when using the “Company tab” on the CIW. Note: For ShipTo addresses (i.e., the address tab on the CIW), use the Import Addresses method. For People addresses (i.e., the people tab on the CIW), use the Import People method. The Companies tab defines those companies that are a part of your leasing program. Each company, however, may perform a different role or function. Examples include: Lessees – the legal\n\n"
+        },
+        {
+          "info": {
+            "name": "Import People",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{environment}.leaseaccelerator.com/lease_accelerator/api/LeaseAccelerator/ImportPeople",
+            "body": {
+              "type": "multipart-form",
+              "data": [
+                {
+                  "name": "token",
+                  "type": "text",
+                  "value": ""
+                },
+                {
+                  "name": "file",
+                  "type": "text",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "This method may be used to add new people. This method is similar to the functionality when using the “People tab” on the CIW. Note: For Company addresses (i.e., the company tab on the CIW), use the Import Company method. For ShipTo addresses (i.e., the address tab on the CIW), use the ImportAddresses method. Many people participate in your leasing program and have different roles. These people may or may not be users of the system. LeaseAccelerator captures these people so that they can rece\n\nO"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,104 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "LeaseAccelerator Documents Search API",
+    "version": "26.3"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "token",
+      "value": "{{token}}",
+      "placement": "query"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Search",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Find Assets",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{environment}.leaseaccelerator.com/lease_accelerator/api/LeaseAccelerator/FindAssets",
+            "body": {
+              "type": "multipart-form",
+              "data": [
+                {
+                  "name": "token",
+                  "type": "text",
+                  "value": ""
+                },
+                {
+                  "name": "file",
+                  "type": "text",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "This method request consists of a Criteria tag of elements used to constrain what assets should be returned.\n\nOperation key: `FindAssets`. Reference: https://docs-leaseaccelerator.insightsoftware.com/hc/en-us/articles/33895853166093-API-Methods"
+        },
+        {
+          "info": {
+            "name": "Find Contacts",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{environment}.leaseaccelerator.com/lease_accelerator/api/LeaseAccelerator/FindContacts",
+            "body": {
+              "type": "multipart-form",
+              "data": [
+                {
+                  "name": "token",
+                  "type": "text",
+                  "value": ""
+                },
+                {
+                  "name": "file",
+                  "type": "text",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "This method may be used to find contact information based on a certain set of criteria.\n\nOperation key: `FindContacts`. Reference: https://docs-leaseaccelerator.insightsoftware.com/hc/en-us/articles/33895853166093-API-Methods"
+        },
+        {
+          "info": {
+            "name": "Find Deals",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{environment}.leaseaccelerator.com/lease_accelerator/api/LeaseAccelerator/FindDeals",
+            "body": {
+              "type": "multipart-form",
+              "data": [
+                {
+                  "name": "token",
+                  "type": "text",
+                  "value": ""
+                },
+                {
+                  "name": "file",
+                  "type": "text",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "This method request consists of a Criteria tag of elements used to constrain what deals should be returned.\n\nOperation key: `FindDeals`. Reference: https://docs-leaseaccelerator.insightsoftware.com/hc/en-us/articles/33895853166093-API-Methods"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

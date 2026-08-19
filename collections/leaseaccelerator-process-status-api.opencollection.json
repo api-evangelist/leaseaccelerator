@@ -1,0 +1,130 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "LeaseAccelerator Documents Process Status API",
+    "version": "26.3"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "token",
+      "value": "{{token}}",
+      "placement": "query"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Process Status",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Booking Status",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{environment}.leaseaccelerator.com/lease_accelerator/api/LeaseAccelerator/GetBookingStatus",
+            "body": {
+              "type": "multipart-form",
+              "data": [
+                {
+                  "name": "token",
+                  "type": "text",
+                  "value": ""
+                },
+                {
+                  "name": "file",
+                  "type": "text",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "The GetBookingStatus operation is used to fetch the status of booking tasks in LeaseAccelerator. The request payload is as below. Note, it is empty, no parameters are needed.\n\nOperation key: `GetBookingStatus`. Reference: https://docs-leaseaccelerator.insightsoftware.com/hc/en-us/articles/33895853166093-API-Methods"
+        },
+        {
+          "info": {
+            "name": "Get Latest Month-End Close Date",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{environment}.leaseaccelerator.com/lease_accelerator/api/LeaseAccelerator/GetLatestClose",
+            "body": {
+              "type": "multipart-form",
+              "data": [
+                {
+                  "name": "token",
+                  "type": "text",
+                  "value": ""
+                },
+                {
+                  "name": "file",
+                  "type": "text",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "The GetLatestClose operation is used to fetch most recent month-end close date. The request payload is as below. Note, it is empty, no parameters are needed.\n\nOperation key: `GetLatestClose`. Reference: https://docs-leaseaccelerator.insightsoftware.com/hc/en-us/articles/33895853166093-API-Methods"
+        },
+        {
+          "info": {
+            "name": "Get Reportable Status",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{environment}.leaseaccelerator.com/lease_accelerator/api/LeaseAccelerator/GetReportableStatus",
+            "body": {
+              "type": "multipart-form",
+              "data": [
+                {
+                  "name": "token",
+                  "type": "text",
+                  "value": ""
+                },
+                {
+                  "name": "file",
+                  "type": "text",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "The GetReportableStatus operation is used to fetch the status of sweeping and booking tasks in LeaseAccelerator typically to determine if it is safe to run areport. The request payload is as below. Note, it is empty, no parameters are needed.\n\nOperation key: `GetReportableStatus`. Reference: https://docs-leaseaccelerator.insightsoftware.com/hc/en-us/articles/33895853166093-API-Methods"
+        },
+        {
+          "info": {
+            "name": "Get Sweeping Status",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{environment}.leaseaccelerator.com/lease_accelerator/api/LeaseAccelerator/GetSweepingStatus",
+            "body": {
+              "type": "multipart-form",
+              "data": [
+                {
+                  "name": "token",
+                  "type": "text",
+                  "value": ""
+                },
+                {
+                  "name": "file",
+                  "type": "text",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "The GetSweepingStatus operation is used to fetch the status of sweeping tasks in LeaseAccelerator. The request payload is as below. Note, it is empty, no parameters are needed.\n\nOperation key: `GetSweepingStatus`. Reference: https://docs-leaseaccelerator.insightsoftware.com/hc/en-us/articles/33895853166093-API-Methods"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

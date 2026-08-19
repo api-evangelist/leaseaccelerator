@@ -1,0 +1,156 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "LeaseAccelerator Documents Events API",
+    "version": "26.3"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "token",
+      "value": "{{token}}",
+      "placement": "query"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Events",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Events for Deal",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{environment}.leaseaccelerator.com/lease_accelerator/api/LeaseAccelerator/GetEventsforDeal",
+            "body": {
+              "type": "multipart-form",
+              "data": [
+                {
+                  "name": "token",
+                  "type": "text",
+                  "value": ""
+                },
+                {
+                  "name": "file",
+                  "type": "text",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "The GetEventsforDeal operation. See the API Methods reference for the full request and response payload.\n\nOperation key: `GetEventsforDeal`. Reference: https://docs-leaseaccelerator.insightsoftware.com/hc/en-us/articles/33895853166093-API-Methods"
+        },
+        {
+          "info": {
+            "name": "Get Participants for Deal Artifacts",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{environment}.leaseaccelerator.com/lease_accelerator/api/LeaseAccelerator/GetParticipantsForDealArtifacts",
+            "body": {
+              "type": "multipart-form",
+              "data": [
+                {
+                  "name": "token",
+                  "type": "text",
+                  "value": ""
+                },
+                {
+                  "name": "file",
+                  "type": "text",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "The GetParticipantsForDealArtifacts operation. See the API Methods reference for the full request and response payload.\n\nOperation key: `GetParticipantsForDealArtifacts`. Reference: https://docs-leaseaccelerator.insightsoftware.com/hc/en-us/articles/33895853166093-API-Methods"
+        },
+        {
+          "info": {
+            "name": "Record Asset Event",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{environment}.leaseaccelerator.com/lease_accelerator/api/LeaseAccelerator/RecordAssetEvent",
+            "body": {
+              "type": "multipart-form",
+              "data": [
+                {
+                  "name": "token",
+                  "type": "text",
+                  "value": ""
+                },
+                {
+                  "name": "file",
+                  "type": "text",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "The RecordAssetEvent operation. See the API Methods reference for the full request and response payload.\n\nOperation key: `RecordAssetEvent`. Reference: https://docs-leaseaccelerator.insightsoftware.com/hc/en-us/articles/33895853166093-API-Methods"
+        },
+        {
+          "info": {
+            "name": "Record Event",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{environment}.leaseaccelerator.com/lease_accelerator/api/LeaseAccelerator/RecordEvent",
+            "body": {
+              "type": "multipart-form",
+              "data": [
+                {
+                  "name": "token",
+                  "type": "text",
+                  "value": ""
+                },
+                {
+                  "name": "file",
+                  "type": "text",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "The RecordEvent operation. See the API Methods reference for the full request and response payload.\n\nOperation key: `RecordEvent`. Reference: https://docs-leaseaccelerator.insightsoftware.com/hc/en-us/articles/33895853166093-API-Methods"
+        },
+        {
+          "info": {
+            "name": "Rollback Event",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{environment}.leaseaccelerator.com/lease_accelerator/api/LeaseAccelerator/RollbackEvent",
+            "body": {
+              "type": "multipart-form",
+              "data": [
+                {
+                  "name": "token",
+                  "type": "text",
+                  "value": ""
+                },
+                {
+                  "name": "file",
+                  "type": "text",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "This method is used to undo or rollback an event previously recorded in LeaseAccelerator. Currently, only EOT events and payment adjustment events are able to be rolled back.\n\nOperation key: `RollbackEvent`. Reference: https://docs-leaseaccelerator.insightsoftware.com/hc/en-us/articles/33895853166093-API-Methods"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

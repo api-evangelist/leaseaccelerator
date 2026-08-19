@@ -1,0 +1,182 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "LeaseAccelerator Documents Portfolio API",
+    "version": "26.3"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "token",
+      "value": "{{token}}",
+      "placement": "query"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Portfolio",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Bulk Participant Update",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{environment}.leaseaccelerator.com/lease_accelerator/api/LeaseAccelerator/BulkParticipantUpdate",
+            "body": {
+              "type": "multipart-form",
+              "data": [
+                {
+                  "name": "token",
+                  "type": "text",
+                  "value": ""
+                },
+                {
+                  "name": "file",
+                  "type": "text",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "This method allows you to update certain Participant information for active leases that exist in LeaseAccelerator. This import does not change or add existing participant records but will only change the participant(s) for the specified deals. The participant you wish to change to must be configured in LeaseAccelerator prior to doing a Bulk Participant Update for schedules. This functionality is similar to logging into the UI and navigating to the Participant tab within the Bulk Import screen.\n\n"
+        },
+        {
+          "info": {
+            "name": "Import Assets",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{environment}.leaseaccelerator.com/lease_accelerator/api/LeaseAccelerator/ImportAssets",
+            "body": {
+              "type": "multipart-form",
+              "data": [
+                {
+                  "name": "token",
+                  "type": "text",
+                  "value": ""
+                },
+                {
+                  "name": "file",
+                  "type": "text",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "This method may be used to refresh the asset-level details for a specific deal. Only one deal at a time may be updated via an ImportAssets request. The Payload for an ImportAssets request consists of an identifier which uniquely identifies the deal for which asset-level details should be repopulated, and a series of LineItem tags, specifying the new asset details. This method is similar to the functionality when using the “Details tab” on the PIW.\n\nOperation key: `ImportAssets`. Reference: https"
+        },
+        {
+          "info": {
+            "name": "Import Deals",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{environment}.leaseaccelerator.com/lease_accelerator/api/LeaseAccelerator/ImportDeals",
+            "body": {
+              "type": "multipart-form",
+              "data": [
+                {
+                  "name": "token",
+                  "type": "text",
+                  "value": ""
+                },
+                {
+                  "name": "file",
+                  "type": "text",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "This method provides a mechanism for importing specific information about each lease schedule and asset within your lease portfolio into LeaseAccelerator, in a single operation, with all information populated. It is modeled on the PIW workbook and is similar to the following tabs: The Schedule tab is the control list of your lease population and contains information about each lease that applies at the schedule level. The Details tab contains details for each piece of equipment or real estate c\n"
+        },
+        {
+          "info": {
+            "name": "Import and Classify Deals",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{environment}.leaseaccelerator.com/lease_accelerator/api/LeaseAccelerator/ImportantClassifyDeals",
+            "body": {
+              "type": "multipart-form",
+              "data": [
+                {
+                  "name": "token",
+                  "type": "text",
+                  "value": ""
+                },
+                {
+                  "name": "file",
+                  "type": "text",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "This method is identical to Import Deals EXCEPT that is also engages the automated LA Classification Engine in addition to providing a mechanism for importing specific information about each lease schedule and asset within your lease portfolio into LeaseAccelerator, in a single operation, with all information populated. The Lease Classification Engine uses Policy Thresholds as parameters for specific tests as outlined in the accounting standards. These thresholds are important in that they allow"
+        },
+        {
+          "info": {
+            "name": "Modify Deal Import",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{environment}.leaseaccelerator.com/lease_accelerator/api/LeaseAccelerator/ModifyDealImport",
+            "body": {
+              "type": "multipart-form",
+              "data": [
+                {
+                  "name": "token",
+                  "type": "text",
+                  "value": ""
+                },
+                {
+                  "name": "file",
+                  "type": "text",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "This method provides a mechanism for modifying a lease schedule in a single operation. Note: This method does NOT run Lease Classification Engine. Please see Import and Classify Deals for invoking this process.\n\nOperation key: `ModifyDealImport`. Reference: https://docs-leaseaccelerator.insightsoftware.com/hc/en-us/articles/33895853166093-API-Methods"
+        },
+        {
+          "info": {
+            "name": "Update Assets",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{environment}.leaseaccelerator.com/lease_accelerator/api/LeaseAccelerator/UpdateAssets",
+            "body": {
+              "type": "multipart-form",
+              "data": [
+                {
+                  "name": "token",
+                  "type": "text",
+                  "value": ""
+                },
+                {
+                  "name": "file",
+                  "type": "text",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "The UpdateAssets operation. See the API Methods reference for the full request and response payload.\n\nOperation key: `UpdateAssets`. Reference: https://docs-leaseaccelerator.insightsoftware.com/hc/en-us/articles/33895853166093-API-Methods"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

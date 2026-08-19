@@ -1,0 +1,182 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "LeaseAccelerator Documents Financials API",
+    "version": "26.3"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "token",
+      "value": "{{token}}",
+      "placement": "query"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Financials",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Import Disbursements",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{environment}.leaseaccelerator.com/lease_accelerator/api/LeaseAccelerator/ImportDisbursements",
+            "body": {
+              "type": "multipart-form",
+              "data": [
+                {
+                  "name": "token",
+                  "type": "text",
+                  "value": ""
+                },
+                {
+                  "name": "file",
+                  "type": "text",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "The ImportDisbursements operation. See the API Methods reference for the full request and response payload.\n\nOperation key: `ImportDisbursements`. Reference: https://docs-leaseaccelerator.insightsoftware.com/hc/en-us/articles/33895853166093-API-Methods"
+        },
+        {
+          "info": {
+            "name": "Import Exchange Rates/FX Rates",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{environment}.leaseaccelerator.com/lease_accelerator/api/LeaseAccelerator/ImportExchangeRates",
+            "body": {
+              "type": "multipart-form",
+              "data": [
+                {
+                  "name": "token",
+                  "type": "text",
+                  "value": ""
+                },
+                {
+                  "name": "file",
+                  "type": "text",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "The ImportExchangeRates operation. See the API Methods reference for the full request and response payload.\n\nOperation key: `ImportExchangeRates`. Reference: https://docs-leaseaccelerator.insightsoftware.com/hc/en-us/articles/33895853166093-API-Methods"
+        },
+        {
+          "info": {
+            "name": "Import Invoiced Expenses",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{environment}.leaseaccelerator.com/lease_accelerator/api/LeaseAccelerator/ImportInvoicedExpenses",
+            "body": {
+              "type": "multipart-form",
+              "data": [
+                {
+                  "name": "token",
+                  "type": "text",
+                  "value": ""
+                },
+                {
+                  "name": "file",
+                  "type": "text",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "This operation enables a customer to import the actual paid amounts for Other Related Expenses, which are approved for payment and sent to Accounts Payable. Based on the lease type, these invoiced amounts may generate accounting entries to record expense adjustments. Accounting entries for this tab are based on the specific expense type; for items such as CAMS, the journal entries will reverse the expense accruals created from the Invoiced Related Expense tab (if matched based on Invoice Number\n"
+        },
+        {
+          "info": {
+            "name": "Import Lessee Rates",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{environment}.leaseaccelerator.com/lease_accelerator/api/LeaseAccelerator/ImportLesseeRates",
+            "body": {
+              "type": "multipart-form",
+              "data": [
+                {
+                  "name": "token",
+                  "type": "text",
+                  "value": ""
+                },
+                {
+                  "name": "file",
+                  "type": "text",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "The ImportLesseeRates allows the loading of rates into LeaseAccelerator of type IBR, Equity or Debt.\n\nOperation key: `ImportLesseeRates`. Reference: https://docs-leaseaccelerator.insightsoftware.com/hc/en-us/articles/33895853166093-API-Methods"
+        },
+        {
+          "info": {
+            "name": "Import Paid Expenses",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{environment}.leaseaccelerator.com/lease_accelerator/api/LeaseAccelerator/ImportPaidExpenses",
+            "body": {
+              "type": "multipart-form",
+              "data": [
+                {
+                  "name": "token",
+                  "type": "text",
+                  "value": ""
+                },
+                {
+                  "name": "file",
+                  "type": "text",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "This method may be used to import the actual paid amounts for Other Related Expenses, which are approved for payment and sent to Accounts Payable. This method is similar to the functionality when using the “Paid Related Expenses tab” on the PIW. Based on the lease type, these invoiced amounts may generate accounting entries to record expense adjustments. Accounting entries for this tab are based on the specific expense type; for items such as CAMS, the journal entries will reverse the expense a\n"
+        },
+        {
+          "info": {
+            "name": "Import Payment Adjustments",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{environment}.leaseaccelerator.com/lease_accelerator/api/LeaseAccelerator/ImportPaymentAdjustments",
+            "body": {
+              "type": "multipart-form",
+              "data": [
+                {
+                  "name": "token",
+                  "type": "text",
+                  "value": ""
+                },
+                {
+                  "name": "file",
+                  "type": "text",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "This method enables a customer to import new payment schedules during a lease term. This method is similar to the functionality when using the “Payment Adjustments” on the PIW. Adjusted Payment schedules may be necessary for various reasons and are generally caused by activity outside the normal lease lifecycle or the determinations of the adjusted payments performed outside the system. Current defined business reasons are: Floating Rate Adjustment Contingent Rent specified in the original contr"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
