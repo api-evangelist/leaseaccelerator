@@ -41,6 +41,17 @@ tags:
 - Financial Reporting
 - Enterprise Software
 - Accounting
+- Real-Estate
+- Asset Management
+- ERP Integration
+- Compliance
+tags_raw:
+- Company
+- Lease Accounting
+- Lease Administration
+- Financial Reporting
+- Enterprise Software
+- Accounting
 - Real Estate
 - Asset Management
 - ERP Integration
@@ -70,6 +81,8 @@ apis:
     https://docs-leaseaccelerator.insightsoftware.com/hc/en-us/articles/33895814655245-Application-Programming-Interface-API-for-Developers
   baseURL: https://www.leaseaccelerator.com/lease_accelerator/api/LeaseAccelerator
   tags:
+  - Event
+  tags_raw:
   - Events
   properties:
   - type: OpenAPI
