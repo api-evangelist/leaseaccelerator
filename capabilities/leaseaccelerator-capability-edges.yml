@@ -1,0 +1,36 @@
+slug: leaseaccelerator
+provider: LeaseAccelerator
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Real Estate
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 2
+edges:
+- tag: User Provisioning
+  spec_file: leaseaccelerator-user-provisioning-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.8
+  evidence: '"Federate User", "Revoke User Credentials", "Update User Credentials"; "Access is secured
+    by SAML2"'
+  reason: Operations federate, update and revoke user credentials against a SAML2 identity layer — identity
+    and access management (joiner-mover-leaver / federation).
+- tag: Events
+  spec_file: leaseaccelerator-events-api-openapi.yml
+  capability_id: BC-710.30
+  capability_id_l1: BC-710
+  capability_name: Lease Administration Management
+  confidence: 0.7
+  evidence: '"Record Event", "Record Asset Event", "Rollback Event", "Get Events for Deal" in a platform
+    combining "lease accounting, lease administration, and asset lifecycle intelligence"'
+  reason: Lease/asset events recorded against deals are the mid-life events (renewal, modification, termination)
+    of lease administration for a corporate lessee, i.e. lease lifecycle management, not a generic pub/sub
+    event bus.

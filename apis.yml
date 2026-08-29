@@ -230,6 +230,9 @@ maintainers:
 - FN: APIs.json
   email: info@apis.io
 common:
+- type: CapabilityMap
+  url: capabilities/leaseaccelerator-capability-edges.yml
+  name: LeaseAccelerator Business Capability Map
 - type: Overlay
   url: overlays/leaseaccelerator-api-overlay.yaml
 - type: DomainSecurity
