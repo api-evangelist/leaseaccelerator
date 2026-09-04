@@ -1,17 +1,17 @@
 ---
 kin_checks:
   slug: leaseaccelerator
-  schema_version: 0.17.2
-  scored_at: '2026-09-01'
-  run_ts: 2026-09-01T063623
+  schema_version: 0.18.2
+  scored_at: '2026-09-04'
+  run_ts: 2026-09-04T062714
   note: Actionable checks only (missed + partial). earned/na are every other check
-    in rubric/scoring-0.17.2.yml; counts below let you verify that.
+    in rubric/scoring-0.18.2.yml; counts below let you verify that.
   counts:
-    total: 130
+    total: 132
     earned: 46
-    partial: 7
-    missed: 53
-    na: 24
+    partial: 8
+    missed: 52
+    na: 26
   checks:
   - id: multiple_apis
     status: missed
@@ -102,8 +102,6 @@ kin_checks:
     detail: pointer liveness 0.0
   - id: agentic_access
     status: missed
-  - id: reversibility_documented
-    status: missed
   - id: mcp_server
     status: missed
   - id: rate_limit_signal
@@ -132,6 +130,10 @@ kin_checks:
   - id: agent_skill_present
     status: partial
     earned: 0.75
+  - id: reversibility_documented
+    status: partial
+    earned: 2.4
+    detail: 'grade: documented'
   - id: auth_clarity
     status: partial
     earned: 3.5
