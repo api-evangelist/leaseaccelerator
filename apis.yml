@@ -112,6 +112,8 @@ apis:
     https://docs-leaseaccelerator.insightsoftware.com/hc/en-us/articles/33895814655245-Application-Programming-Interface-API-for-Developers
   baseURL: https://www.leaseaccelerator.com/lease_accelerator/api/LeaseAccelerator
   tags:
+  - Financial
+  tags_raw:
   - Financials
   properties:
   - type: OpenAPI
