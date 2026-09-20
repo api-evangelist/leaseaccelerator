@@ -1,0 +1,18 @@
+# Pricing transcribed from the provider's own page — see provenance. Numbers are quoted, not derived.
+generated: '2026-09-20'
+method: searched
+source: https://www.insightsoftware.com/request-a-price/
+sources:
+- https://www.insightsoftware.com/request-a-price/
+- https://insightsoftware.com/request-a-price/
+provenance:
+  tool: planning/api-economics/harvest_pricing.py
+  run: 20260920T120546
+  grounding: every price_text was found verbatim in the fetched page text
+audience: business-product
+pricing_basis: negotiated
+published: false
+note: No numeric price is published on the pricing page; Page is a 'Request a Price' lead-capture form
+  with no numeric prices shown.
+plan_count: 0
+plans: []
