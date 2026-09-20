@@ -11,6 +11,10 @@ provenance:
   grounding: every price_text was found verbatim in the fetched page text
 audience: business-product
 pricing_basis: negotiated
+delivery:
+  delivery: managed
+  method: keyword-prefilter
+  read: '2026-09-20'
 published: false
 note: No numeric price is published on the pricing page; Page is a 'Request a Price' lead-capture form
   with no numeric prices shown.
