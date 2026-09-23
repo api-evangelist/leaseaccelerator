@@ -2,7 +2,7 @@ overlay: 1.0.0
 info:
   title: API Evangelist enrichment overlay for the LeaseAccelerator API
   version: 1.0.0
-  description: >-
+  x-description: >-
     Captures the API Evangelist enrichment layered on top of
     openapi/leaseaccelerator-api-openapi.yml. The base description is itself generated from
     LeaseAccelerator's published developer documentation, since LeaseAccelerator ships no machine-readable

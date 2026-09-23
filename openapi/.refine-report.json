@@ -1,15 +1,7 @@
 {
   "provider": "leaseaccelerator",
   "sources": [
-    "leaseaccelerator-documents-api-openapi.yml",
-    "leaseaccelerator-events-api-openapi.yml",
-    "leaseaccelerator-financials-api-openapi.yml",
-    "leaseaccelerator-portfolio-api-openapi.yml",
-    "leaseaccelerator-process-status-api-openapi.yml",
-    "leaseaccelerator-reference-data-api-openapi.yml",
-    "leaseaccelerator-reporting-api-openapi.yml",
-    "leaseaccelerator-search-api-openapi.yml",
-    "leaseaccelerator-user-provisioning-api-openapi.yml"
+    "_original/leaseaccelerator-api-openapi.yml"
   ],
   "outputs": [
     "leaseaccelerator-documents-api-openapi.yml",
@@ -25,6 +17,20 @@
   "archived": [],
   "errors": [],
   "warnings": [],
-  "notes": [],
-  "skipped": []
+  "notes": [
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "leaseaccelerator-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "leaseaccelerator-documents-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "leaseaccelerator-events-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "leaseaccelerator-financials-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "leaseaccelerator-portfolio-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "leaseaccelerator-process-status-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "leaseaccelerator-reference-data-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "leaseaccelerator-reporting-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "leaseaccelerator-search-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "leaseaccelerator-user-provisioning-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }
