@@ -53,7 +53,7 @@ tags:
 - Financial Reporting
 - Enterprise Software
 - Accounting
-- Real-Estate
+- Real Estate
 - Asset Management
 - ERP Integration
 - Compliance
@@ -68,6 +68,7 @@ tags_raw:
 - Asset Management
 - ERP Integration
 - Compliance
+- Real-Estate
 apis:
 - aid: leaseaccelerator:leaseaccelerator-documents-api
   name: LeaseAccelerator Documents API
@@ -112,9 +113,10 @@ apis:
     https://docs-leaseaccelerator.insightsoftware.com/hc/en-us/articles/33895814655245-Application-Programming-Interface-API-for-Developers
   baseURL: https://www.leaseaccelerator.com/lease_accelerator/api/LeaseAccelerator
   tags:
-  - Financial
+  - Finance
   tags_raw:
   - Financials
+  - Financial
   properties:
   - type: OpenAPI
     url: openapi/leaseaccelerator-financials-api-openapi.yml
